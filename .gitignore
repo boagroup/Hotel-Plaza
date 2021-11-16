@@ -1,1 +1,12 @@
+# git ignore written by and for boagroup
+########################################
 
+# ignore everything
+*
+# except: 
+#   anything inside the diagrams folder
+!diagrams/**/
+#   .java files in src folder
+!src/**/*.java
+#   README file
+!README.md
