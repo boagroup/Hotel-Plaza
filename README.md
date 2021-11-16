@@ -1,7 +1,7 @@
 
 # Hotel-Plaza
 ## 1st Semester Interdisciplinary Project
-  [**PDF of the Assignemt**]()
+  [**PDF of the Assignemt**](HotelPlaza.pdf)
 # 
 ### 1. Understading Business Diagrams 
   1.  [**Gantt chart**]()
