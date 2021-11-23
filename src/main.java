@@ -13,16 +13,10 @@ public class Main {
     }
 
     public static void loginMenu(Scanner sc, String answer) {
-        while (true) {
-            Interface.printLoginMenu();
-//            System.out.println("What do you wish to do?");
-//            answer = sc.nextLine();
-        }
     }
     public static void MainMenu(Scanner sc, String answer) {
         mainLoop:
         while (true) {
-            Interface.printMainMenu();
             System.out.println("What do you wish to do?");
             answer = sc.nextLine();
             switch (answer) {
