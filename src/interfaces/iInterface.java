@@ -11,11 +11,11 @@ public interface iInterface {
 			"██║░░██║╚█████╔╝░░░██║░░░███████╗███████╗  ██║░░░░░███████╗██║░░██║███████╗██║░░██║\n" +
 			"╚═╝░░╚═╝░╚════╝░░░░╚═╝░░░╚══════╝╚══════╝  ╚═╝░░░░░╚══════╝╚═╝░░╚═╝╚══════╝╚═╝░░╚═╝";
 
-    public void printLogo();
-	public void printLoginMenu();
-	public void printMainMenu();
-	public void printBookingsMenu();
-	public void printRoomsMenu();
-	public void printStaffMenu();
-	public void printFinanceMenu();
+     void printLogo();
+	 void printLoginMenu();
+	 void printMainMenu();
+	 void printBookingsMenu();
+	 void printRoomsMenu();
+	 void printStaffMenu();
+	 void printFinanceMenu();
 }
