@@ -2,7 +2,7 @@ import interfaces.iDatabase;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public abstract class Database implements iDatabase {
+public abstract class ArrayContainer {
 	private static final HashMap<Class<?>, ArrayList<?>> db = new HashMap<>();
 
 	public static <T> void addArrayList(Class<T> type, ArrayList<T> list) {
@@ -13,7 +13,7 @@ public abstract class Database implements iDatabase {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static <T> ArrayList<T> getList(Class<T> type) {
+	public static <T> ArrayList<T> getArrayList(Class<T> type) {
 		return (ArrayList<T>) db.get(type);
 	}
 }
