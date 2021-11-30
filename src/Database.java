@@ -12,10 +12,10 @@ public final class Database implements Serializable {
 	public static boolean saveDatabase() {
 		File folder = new File(DIR);
 		try {
-			if (!folder.mkdir() || !folder.exists()) {
+			if (!folder.mkdir() && !folder.exists()) {
 				throw new IOException("Creating or finding folder failed");
 			}
-			FileOutputStream fos = new FileOutputStream(DIR + File.separator + "db");
+			FileOutputStream fos = new FileOutputStream(DIR + File.separator + "db.ser");
 			ObjectOutputStream out = new ObjectOutputStream(fos);
 			out.writeObject(db);
 			out.close();
@@ -33,13 +33,14 @@ public final class Database implements Serializable {
 			if (!folder.isDirectory() || !folder.exists()) {
 				throw new IOException("finding folder failed");
 			}
-			FileInputStream fis = new FileInputStream(DIR + File.separator + "db");
+			FileInputStream fis = new FileInputStream(DIR + File.separator + "db.ser");
 			ObjectInputStream in = new ObjectInputStream(fis);
 			db = (ArrayContainer) in.readObject();
 			in.close();
 			fis.close();
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			System.out.println();
+			System.out.println(e instanceof FileNotFoundException ? "File not found" : e.getMessage());
 			return false;
 		}
 		return true;
@@ -50,7 +51,7 @@ public final class Database implements Serializable {
 	}
 
 	public static void main(String[] args) {
-		if (Database.saveDatabase()) {
+		if (Database.loadDatabase()) {
 			System.out.println("TRUE");
 		} else {
 			System.out.println("FALSE");
