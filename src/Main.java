@@ -39,12 +39,12 @@ public class Main {
             else if (answer.equals("3")) {
                 System.exit(0);
             }
-            else if (answer.equals("4")) {                                               //REMOVE THIS LINE FOR FINAL VERSION
-                Authentication.loggedInUser = new User("Admin","0", (byte) 5);//REMOVE THIS LINE FOR FINAL VERSION
-                isLoggedIn = true;                                                       //REMOVE THIS LINE FOR FINAL VERSION
-                System.out.println("Authentication override for development purposes");  //REMOVE THIS LINE FOR FINAL VERSION
-                System.out.println(Authentication.loggedInUser);                         //REMOVE THIS LINE FOR FINAL VERSION
-            }                                                                            //REMOVE THIS LINE FOR FINAL VERSION
+            else if (answer.equals("4")) {                                                 //REMOVE THIS LINE FOR FINAL VERSION
+                Authentication.loggedInUser = new User("Admin","0", (byte) 5);  //REMOVE THIS LINE FOR FINAL VERSION
+                isLoggedIn = true;                                                         //REMOVE THIS LINE FOR FINAL VERSION
+                System.out.println("Authentication override for development purposes");    //REMOVE THIS LINE FOR FINAL VERSION
+                System.out.println(Authentication.loggedInUser);                           //REMOVE THIS LINE FOR FINAL VERSION
+            }                                                                              //REMOVE THIS LINE FOR FINAL VERSION
             else {
                 System.out.println("Invalid input. Retry.");
             }

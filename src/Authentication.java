@@ -30,7 +30,6 @@ public class Authentication implements Serializable {
         String userName = sc.nextLine();
         System.out.println("Please insert your new password:");
         String userPass = sc.nextLine();
-        label:
         System.out.println("Please insert the permission level of the user:\n" +
                 "     RECOMMENDED PERMISSION LEVELS:\n" +
                 "     1: Basic User (e.g. Receptionist)\n" +
