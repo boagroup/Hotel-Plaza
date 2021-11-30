@@ -7,6 +7,7 @@ public class Authentication implements Serializable {
     public static User loggedInUser;
     private static boolean loginSuccessful = false;
     private static boolean nameIsRepeated = false;
+    public static ArrayList<User> userArrayList = new ArrayList<User>();
 
     /**
      * Registers a new user to the System
@@ -15,10 +16,13 @@ public class Authentication implements Serializable {
 
         /* Password required to use the register function */
         Scanner sc = new Scanner(System.in);
-        System.out.println("Insert security password:");
+        System.out.println("Insert security password:\nIf you don't know the password, type \"1\" to go back");
         String securityPass = sc.nextLine();
         if (securityPass.equals("2137")) {
             System.out.println("Permission granted");
+        }
+        else if (securityPass.equals("1")) {
+            return;
         }
         else {
             System.out.println("Incorrect password.");
@@ -37,16 +41,17 @@ public class Authentication implements Serializable {
                 "     3: Advanced User (e.g. Accountant, GM)\n" +
                 "     4: Full-permission User (e.g. Director)");
         byte userPermission = 0;
-        try {
-            userPermission = Byte.parseByte(sc.nextLine());
-        }
-        catch (NumberFormatException exception) {
-            System.out.println("That's not a valid number");
-            return;
+        while (true) {
+            try {
+                userPermission = Byte.parseByte(sc.nextLine());
+                break;
+            } catch (NumberFormatException exception) {
+                System.out.println("Oops! That's not a valid number.\nTry again.");
+            }
         }
 
-        /* IF User.ser FILE ALREADY EXISTS */
-        File f = new File("User.ser");
+        /* IF Users.ser FILE ALREADY EXISTS */
+        File f = new File("Users.ser");
         if (f.exists()) {
 
             /* Check if username is repeated */
@@ -65,17 +70,17 @@ public class Authentication implements Serializable {
 
             /* If username is not repeated, save user to file */
             else {
-                User.userArrayList = loadUsers();
-                User.userArrayList.add(new User(userName, userPass, userPermission));
+                userArrayList = loadUsers();
+                userArrayList.add(new User(userName, userPass, userPermission));
                 saveUsers();
                 System.out.println("Registration successful. Returning to start menu");
                 Interface.loadingScreen();
             }
         }
 
-        /* IF User.ser FILE DOES NOT EXIST */
+        /* IF s FILE DOES NOT EXIST */
         else {
-            User.userArrayList.add(new User(userName, userPass, userPermission));
+            userArrayList.add(new User(userName, userPass, userPermission));
             saveUsers();
             System.out.println("First registration successful. Returning to start menu");
             Interface.loadingScreen();
@@ -89,7 +94,7 @@ public class Authentication implements Serializable {
     public static void login() {
 
         /* Prevent crash if no users have been registered yet */
-        File f = new File("User.ser");
+        File f = new File("Users.ser");
         if (!f.exists()) {
             System.out.println("No users registered.");
             return;
@@ -117,9 +122,9 @@ public class Authentication implements Serializable {
                 }
             }
             if (isLoginSuccessful()) {
+                Interface.loadingScreen();
                 System.out.println("You are now logged in.");
                 System.out.println(loggedInUser); // REMOVE THIS LINE FOR FINAL VERSION
-                Interface.loadingScreen();
                 break;
             }
 
@@ -132,13 +137,13 @@ public class Authentication implements Serializable {
     }
 
     /**
-     * Serializes userArrayList to "User.ser" file
+     * Serializes userArrayList to "Users.ser" file
      */
     public static void saveUsers() {
         try {
-            FileOutputStream fileOut = new FileOutputStream("User.ser");
+            FileOutputStream fileOut = new FileOutputStream("Users.ser");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            out.writeObject(User.userArrayList);
+            out.writeObject(userArrayList);
             out.close();
             fileOut.close();
         } catch (IOException i) {
@@ -148,12 +153,12 @@ public class Authentication implements Serializable {
     }
 
     /**
-     * Returns deserialized ArrayList of Users from "User.ser" file
+     * Returns deserialized ArrayList of Users from "Users.ser" file
      */
     public static ArrayList<User> loadUsers() {
         ArrayList<User> u = null;
         try {
-            FileInputStream fileIn = new FileInputStream("User.ser");
+            FileInputStream fileIn = new FileInputStream("Users.ser");
             ObjectInputStream in = new ObjectInputStream(fileIn);
             u = (ArrayList<User>) in.readObject();
             in.close();

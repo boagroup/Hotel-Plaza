@@ -1,11 +1,9 @@
 import java.io.Serializable;
-import java.util.ArrayList;
 
 public class User implements Serializable {
 
     private String username;
     private String password;
-    public static ArrayList<User> userArrayList = new ArrayList<User>();
     private byte permission;
     /*
      PERMISSION LEVELS:
@@ -31,24 +29,30 @@ public class User implements Serializable {
                 '}';
     }
 
+    // Getters
+
+
     public String getUsername() {
         return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public byte getPermission() {
         return permission;
+    }
+
+    // Setters
+
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public void setPermission(byte permission) {
