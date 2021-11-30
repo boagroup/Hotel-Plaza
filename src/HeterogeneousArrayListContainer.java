@@ -16,7 +16,7 @@ public class HeterogeneousArrayListContainer implements Serializable {
 	}
 
 	/**
-	 * constructs an empty HeterogeneousArrayListContainer with the default initial capacity of 16 (same as Hashmap)
+	 * constructs an empty HeterogeneousArrayListContainer with the specified initial capacity
 	 *
 	 * @param  initialCapacity the initial capacity.
 	 * @throws IllegalArgumentException if the initial capacity is negative.
