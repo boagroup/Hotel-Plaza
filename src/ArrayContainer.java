@@ -7,14 +7,14 @@ public class ArrayContainer implements Serializable {
 
 	public ArrayContainer() {}
 
-	public <T> void putArrayList(Class<T> type, ArrayList<T> list) {
+	public <T> void putArrayList(Class<T> type, ArrayList<T> list) throws NullPointerException {
 		if (type == null) {
 			throw new NullPointerException("Type is null");
 		}
 		hM.put(type, list);
 	}
 
-	public <T> void removeArrayList(Class<T> type) {
+	public <T> void removeArrayList(Class<T> type) throws NullPointerException {
 		if (type == null) {
 			throw new NullPointerException("Type is null");
 		}
@@ -22,14 +22,14 @@ public class ArrayContainer implements Serializable {
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T> ArrayList<T> getArrayList(Class<T> type) {
+	public <T> ArrayList<T> getArrayList(Class<T> type) throws NullPointerException{
 		if (type == null) {
 			throw new NullPointerException("Type is null");
 		}
 		return (ArrayList<T>) hM.get(type);
 	}
 
-	public <T> boolean containsClass(Class<T> type) {
+	public <T> boolean containsClass(Class<T> type) throws NullPointerException {
 		if (type == null) {
 			throw new NullPointerException("Type is null");
 		}
