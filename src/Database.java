@@ -3,7 +3,6 @@ import java.util.ArrayList;
 
 public final class Database implements Serializable {
 	private static ArrayContainer db = new ArrayContainer();
-	private static String test = "test";
 	private static final String DIR = System.getProperty("user.dir") + File.separator + "database";
 
 	private Database() {
@@ -13,7 +12,7 @@ public final class Database implements Serializable {
 	public static boolean saveDatabase() {
 		File folder = new File(DIR);
 		try {
-			if (!folder.mkdir() && !folder.exists()) {
+			if (!folder.mkdir() || !folder.exists()) {
 				throw new IOException("Creating or finding folder failed");
 			}
 			FileOutputStream fos = new FileOutputStream(DIR + File.separator + "db");
@@ -29,6 +28,20 @@ public final class Database implements Serializable {
 	}
 
 	public static boolean loadDatabase() {
+		File folder = new File(DIR);
+		try {
+			if (!folder.isDirectory() || !folder.exists()) {
+				throw new IOException("finding folder failed");
+			}
+			FileInputStream fis = new FileInputStream(DIR + File.separator + "db");
+			ObjectInputStream in = new ObjectInputStream(fis);
+			db = (ArrayContainer) in.readObject();
+			in.close();
+			fis.close();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return false;
+		}
 		return true;
 	}
 
