@@ -2,11 +2,11 @@ import java.io.*;
 import java.util.ArrayList;
 
 public final class Database implements Serializable {
-	private static ArrayContainer db = new ArrayContainer();
+	private static HeterogeneousArrayListContainer db = new HeterogeneousArrayListContainer();
 	private static final String DIR = System.getProperty("user.dir") + File.separator + "database";
 
 	private Database() {
-		throw new RuntimeException("Instantation of Database is not allowed");
+		throw new RuntimeException("Instantiation of Database is not allowed");
 	}
 
 	public static boolean saveDatabase() {
@@ -35,7 +35,7 @@ public final class Database implements Serializable {
 			}
 			FileInputStream fis = new FileInputStream(DIR + File.separator + "db.ser");
 			ObjectInputStream in = new ObjectInputStream(fis);
-			db = (ArrayContainer) in.readObject();
+			db = (HeterogeneousArrayListContainer) in.readObject();
 			in.close();
 			fis.close();
 		} catch (Exception e) {

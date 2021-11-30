@@ -2,10 +2,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ArrayContainer implements Serializable {
+public class HeterogeneousArrayListContainer implements Serializable {
 	private final HashMap<Class<?>, ArrayList<?>> hM = new HashMap<>();
 
-	public ArrayContainer() {}
+	public HeterogeneousArrayListContainer() {}
 
 	public <T> void putArrayList(Class<T> type, ArrayList<T> list) throws NullPointerException {
 		if (type == null) {
