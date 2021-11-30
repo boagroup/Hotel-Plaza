@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * stores hashmap with Classes as keys an Arraylist of instances of those classes as values
+ * stores hashmap with Classes as keys and Arraylists of instances of those classes as values
  */
 public class HeterogeneousArrayListContainer implements Serializable {
 	private final HashMap<Class<?>, ArrayList<?>> hM;
