@@ -26,6 +26,7 @@ public class Authentication implements Serializable {
             System.out.println("Permission granted");
         }
         else if (securityPass.equals("1")) {
+            UI.printLoginMenu();
             return;
         }
         else {
