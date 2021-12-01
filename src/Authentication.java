@@ -1,4 +1,5 @@
 import java.io.*;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -11,6 +12,8 @@ public class Authentication implements Serializable {
 
     /**
      * Registers a new user to the System
+     * The registration is complete once a new User object has been stored in a "Users.ser" file
+     * Has built-in failsafe features to prevent the program from crashing
      */
     public static void register() {
 
@@ -90,6 +93,8 @@ public class Authentication implements Serializable {
 
     /**
      * Logs in an existing user to the System
+     * The login is complete once an existing User from the "Users.ser" file is stored in the loggedInUser attribute
+     * Has built-in failsafe features to prevent the program from crashing
      */
     public static void login() {
 
@@ -172,6 +177,57 @@ public class Authentication implements Serializable {
             return null;
         }
         return u;
+    }
+    /**
+     * Prints out a list with all the users stored in memory in the "Users.ser" file
+     * The "password" attribute of each User gets censored for security purposes by default
+     * The censorship can be overwritten if the user is an admin
+     * Has built-in failsafe features to prevent the program from crashing
+     */
+    public static void listUsers() {
+
+        /* Prints out the list if the user is an admin */
+        if (loggedInUser.getUsername().equals("Admin")) {
+            System.out.println("Listing users with admin permission levels...\n");
+            Interface.loadingScreen();
+
+            /* Handles the list if the "Users.ser" file exists */
+            File f = new File("Users.ser");
+            if (f.exists()) {
+                for (User user : loadUsers()) {
+                    System.out.println();
+                    System.out.println("<=================================>");
+                    System.out.println("USERNAME: " + user.getUsername());
+                    System.out.println("PASSWORD: " + user.getPassword());
+                    System.out.println("PERMISSION LEVEL: " + user.getPermission());
+                    System.out.println("<=================================>");
+                    System.out.println();
+                }
+            }
+
+            /* Handles the list if the "Users.ser" file does not exist */
+            else {
+                System.out.println("No users have been registered yet.");
+                System.out.println("The Admin user is not stored in memory.");
+                System.out.println("Stop trying to break the program."); // REMOVE THIS LINE
+                System.out.println();
+            }
+        }
+
+        /* Prints out the censored list for regular users */
+        else {
+            Interface.loadingScreen();
+            for (User user : loadUsers()) {
+                System.out.println();
+                System.out.println("<=================================>");
+                System.out.println("USERNAME: " + user.getUsername());
+                user.setPassword("*****");
+                System.out.println("PASSWORD: " + user.getPassword());
+                System.out.println("PERMISSION LEVEL: " + user.getPermission());
+                System.out.println("<=================================>");
+                System.out.println();
+            }
+        }
     }
 
 

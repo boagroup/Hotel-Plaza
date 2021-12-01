@@ -97,6 +97,38 @@ public class Main {
     }
     public static void BookingsMenu(Scanner sc, String answer) {}
     public static void RoomsMenu(Scanner sc, String answer) {}
-    public static void StaffMenu(Scanner sc, String answer) {}
+    public static void StaffMenu(Scanner sc, String answer) {
+
+        while (true) {
+            Interface.menuLogo("Staff Menu");
+            System.out.println(
+                    "Pick an option: " +
+                            "\n1. Add Staff" +
+                            "\n2. Manage Staff" +
+                            "\n3. List System Users" +
+                            "\n4. Go back");
+            answer = sc.nextLine();
+            switch (answer) {
+                case "1":
+                    System.out.println("Nothing here yet");
+                    break;
+
+                case "2":
+                    System.out.println("Nope");
+                    break;
+
+                case "3":
+                    Authentication.listUsers();
+                    break;
+
+                case "4":
+                    return;
+
+                default:
+                    System.out.println("Invalid option");
+                    break;
+            }
+        }
+    }
     public static void FinanceMenu(Scanner sc, String answer) {}
 }
