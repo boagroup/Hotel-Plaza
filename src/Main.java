@@ -98,7 +98,8 @@ public class Main implements UI {
                             "\n1. Add Staff" +
                             "\n2. Manage Staff" +
                             "\n3. List System Users" +
-                            "\n4. Go back");
+                            "\n4. Remove User" +
+                            "\n5. Go back");
             answer = sc.nextLine();
             switch (answer) {
                 case "1":
@@ -114,6 +115,10 @@ public class Main implements UI {
                     break;
 
                 case "4":
+                    Authentication.removeUser();
+                    break;
+
+                case "5":
                     return;
 
                 default:

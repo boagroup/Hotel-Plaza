@@ -195,7 +195,7 @@ public class Authentication implements Serializable {
 
             /* Handles the list if the "Users.ser" file exists */
             File f = new File("Users.ser");
-            if (f.exists()) {
+            if (f.exists() && (!loadUsers().isEmpty())) {
                 for (User user : loadUsers()) {
                     System.out.println();
                     System.out.println("<=================================>");
@@ -205,6 +205,9 @@ public class Authentication implements Serializable {
                     System.out.println("<=================================>");
                     System.out.println();
                 }
+            }
+            else if (f.exists() && (loadUsers().isEmpty())) {
+                System.out.println("All of the users have been deleted.");
             }
 
             /* Handles the list if the "Users.ser" file does not exist */
@@ -229,6 +232,32 @@ public class Authentication implements Serializable {
                 System.out.println("<=================================>");
                 System.out.println();
             }
+        }
+    }
+
+    public static void removeUser() {
+        File f = new File("Users.ser");
+        if (f.exists()) {
+            System.out.println("Saved Users:");
+            int i = 1;
+            for (User user : loadUsers()) {
+                System.out.println(i++ + ". " + user.getUsername());
+            }
+            if(!userArrayList.isEmpty()) {
+            System.out.println("Type the number of the User that you want to remove:");
+            Scanner sc = new Scanner(System.in);
+            String answer = sc.nextLine();
+            userArrayList = Authentication.loadUsers();
+
+                userArrayList.remove(Integer.parseInt(answer) - 1);
+            }
+            else {
+                System.out.println("Out of users to remove.");
+            }
+            saveUsers();
+        }
+        else {
+            System.out.println("No users have been registered yet.");
         }
     }
 

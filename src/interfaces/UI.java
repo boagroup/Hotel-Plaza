@@ -20,7 +20,7 @@ public interface UI {
 	static void clearScreen() {
 		try {
 			if(System.getProperty("java.class.path").contains("idea_rt.jar")) {
-				System.out.print("clear");
+				System.out.println("clear");
 			} else {
 				System.out.print("\033[H\033[2J");
 				System.out.flush();
