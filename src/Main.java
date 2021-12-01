@@ -5,19 +5,25 @@ import java.util.Scanner;
 
 public class Main {
 
+    static boolean isLoggedIn = false;
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         String answer = null;
-        loginMenu(sc, answer);
-        MainMenu(sc, answer);
-        sc.close();
+        while (true) {
+            if (!isLoggedIn) {
+                loginMenu(sc, answer);
+            } else {
+                MainMenu(sc, answer);
+            }
+        }
+
     }
 
     /**
      * Enables the user to authenticate or to terminate the program
      */
     public static void loginMenu(Scanner sc, String answer) {
-        boolean isLoggedIn = false;
 
         while (!isLoggedIn) {
             System.out.println("Pick an option: ");
@@ -28,6 +34,7 @@ public class Main {
                 Authentication.login();
                 if (Authentication.isLoginSuccessful()) {
                     isLoggedIn = true;
+                    Authentication.setLoginSuccessful(false);
                 }
                 else {
                     System.out.println("Login unsuccessful. Try again.");
@@ -39,12 +46,12 @@ public class Main {
             else if (answer.equals("3")) {
                 System.exit(0);
             }
-            else if (answer.equals("4")) {                                                 //REMOVE THIS LINE FOR FINAL VERSION
-                Authentication.loggedInUser = new User("Admin","0", (byte) 5);  //REMOVE THIS LINE FOR FINAL VERSION
-                isLoggedIn = true;                                                         //REMOVE THIS LINE FOR FINAL VERSION
-                System.out.println("Authentication override for development purposes");    //REMOVE THIS LINE FOR FINAL VERSION
-                System.out.println(Authentication.loggedInUser);                           //REMOVE THIS LINE FOR FINAL VERSION
-            }                                                                              //REMOVE THIS LINE FOR FINAL VERSION
+            else if (answer.equals("4")) {                                                      //REMOVE THIS LINE FOR FINAL VERSION
+                Authentication.setLoggedInUser(new User("Admin","0", (byte) 5));       //REMOVE THIS LINE FOR FINAL VERSION
+                isLoggedIn = true;                                                              //REMOVE THIS LINE FOR FINAL VERSION
+                System.out.println("Authentication override for development purposes");         //REMOVE THIS LINE FOR FINAL VERSION
+                System.out.println(Authentication.getLoggedInUser());                           //REMOVE THIS LINE FOR FINAL VERSION
+            }                                                                                   //REMOVE THIS LINE FOR FINAL VERSION
             else {
                 System.out.println("Invalid input. Retry.");
             }
@@ -52,8 +59,15 @@ public class Main {
     }
     public static void MainMenu(Scanner sc, String answer) {
         mainLoop:
-        while (true) {
+        while (isLoggedIn) {
             System.out.println("What do you wish to do?");
+            System.out.println(
+                    "1. Open Bookings Menu\n" +
+                    "2. Open Rooms Menu\n" +
+                    "3. Open Staff Menu\n" +
+                    "4. Open Finance Menu\n" +
+                    "5. Log out");
+
             answer = sc.nextLine();
             switch (answer) {
                 case "1":
@@ -69,9 +83,15 @@ public class Main {
                     FinanceMenu(sc, answer);
                     break;
                 case "5":
-                    break mainLoop;
-                default:
+                    System.out.println("Logging out...");
+                    Interface.loadingScreen();
+                    Authentication.setLoggedInUser(null);
+                    isLoggedIn = false;
                     break;
+
+                default:
+                    System.out.println("Invalid Option");
+                    return;
             }
         }
     }

@@ -4,10 +4,10 @@ import java.util.Scanner;
 
 public class Authentication implements Serializable {
 
-    public static User loggedInUser;
+    private static User loggedInUser;
     private static boolean loginSuccessful = false;
     private static boolean nameIsRepeated = false;
-    public static ArrayList<User> userArrayList = new ArrayList<User>();
+    private static ArrayList<User> userArrayList = new ArrayList<User>();
 
     /**
      * Registers a new user to the System
@@ -176,6 +176,15 @@ public class Authentication implements Serializable {
 
 
     /* Getters and setters */
+
+    public static User getLoggedInUser() {
+        return loggedInUser;
+    }
+
+    public static void setLoggedInUser(User loggedInUser) {
+        Authentication.loggedInUser = loggedInUser;
+    }
+
     public static boolean isLoginSuccessful() {
         return loginSuccessful;
     }
@@ -184,5 +193,11 @@ public class Authentication implements Serializable {
         Authentication.loginSuccessful = loginSuccessful;
     }
 
+    public static ArrayList<User> getUserArrayList() {
+        return userArrayList;
+    }
 
+    public static void setUserArrayList(ArrayList<User> userArrayList) {
+        Authentication.userArrayList = userArrayList;
+    }
 }
