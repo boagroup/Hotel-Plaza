@@ -44,7 +44,7 @@ public interface UI {
 		sleep();
 		printLogo();
 		String menu =   "Welcome to the " + title +
-		                "Please Log in or register your account to continue.\n\n" +
+		                "Please log in or register your account to continue.\n\n" +
 		                "1. Log in\n" +
 		                "2. Register\n" +
 						"3. Exit\n" +
