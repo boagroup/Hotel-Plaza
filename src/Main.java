@@ -5,22 +5,67 @@ import interfaces.UI;
  */
 public class Main implements UI {
 
+    static boolean isLoggedIn = false;
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         String answer = null;
-        UI.printLoginMenu();
-        loginMenu(sc, answer);
-        MainMenu(sc, answer);
+        while (true) {
+            if (!isLoggedIn) {
+                loginMenu(sc, answer);
+            } else {
+                MainMenu(sc, answer);
+            }
+        }
         sc.close();
-    }
-
+    /**
+     * Enables the user to authenticate or to terminate the program
+     */
     public static void loginMenu(Scanner sc, String answer) {
-        sc.nextLine();
+
+        while (!isLoggedIn) {
+            System.out.println("Pick an option: ");
+            System.out.println("1. Login\n2. Register\n3. Exit");
+            answer = sc.nextLine();
+
+            if (answer.equals("1")) {
+                Authentication.login();
+                if (Authentication.isLoginSuccessful()) {
+                    isLoggedIn = true;
+                    Authentication.setLoginSuccessful(false);
+                }
+                else {
+                    System.out.println("Login unsuccessful. Try again.");
+                }
+            }
+            else if (answer.equals("2")) {
+                Authentication.register();
+            }
+            else if (answer.equals("3")) {
+                System.exit(0);
+            }
+            else if (answer.equals("4")) {                                                      //REMOVE THIS LINE FOR FINAL VERSION
+                Authentication.setLoggedInUser(new User("Admin","0", (byte) 5));       //REMOVE THIS LINE FOR FINAL VERSION
+                isLoggedIn = true;                                                              //REMOVE THIS LINE FOR FINAL VERSION
+                System.out.println("Authentication override for development purposes");         //REMOVE THIS LINE FOR FINAL VERSION
+                System.out.println(Authentication.getLoggedInUser());                           //REMOVE THIS LINE FOR FINAL VERSION
+            }                                                                                   //REMOVE THIS LINE FOR FINAL VERSION
+            else {
+                System.out.println("Invalid input. Retry.");
+            }
+        }
     }
     public static void MainMenu(Scanner sc, String answer) {
         mainLoop:
-        while (true) {
-            UI.printMainMenu();
+        while (!isLoggedIn) {
+            System.out.println("Pick an option: ");
+            System.out.println("1. Login\n2. Register\n3. Exit");
+            answer = sc.nextLine();
+
+            if (answer.equals("1")) {
+                Authentication.login();
+                if (Authentication.isLoginSuccessful()) {
+                    isLoggedIn = true;
             answer = sc.nextLine();
             switch (answer) {
                 case "1":
@@ -36,9 +81,15 @@ public class Main implements UI {
                     FinanceMenu(sc, answer);
                     break;
                 case "5":
-                    break mainLoop;
-                default:
+                    System.out.println("Logging out...");
+                    Interface.loadingScreen();
+                    Authentication.setLoggedInUser(null);
+                    isLoggedIn = false;
                     break;
+
+                default:
+                    System.out.println("Invalid Option");
+                    return;
             }
         }
     }
