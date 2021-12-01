@@ -1,3 +1,5 @@
+package ItemsPackage;
+
 import java.util.Date;
 
 public class Booking extends Item {

@@ -1,3 +1,5 @@
+package ItemsPackage;
+
 public class Room extends Item {
 	protected int number;
 	protected String type;

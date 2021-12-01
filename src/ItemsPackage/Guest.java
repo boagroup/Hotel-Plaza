@@ -1,3 +1,5 @@
+package ItemsPackage;
+
 public class Guest extends Item {
 
 	protected String name;

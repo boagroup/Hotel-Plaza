@@ -1,3 +1,5 @@
+package ItemsPackage;
+
 public class Staff extends Item {
     protected String name;
     protected String position;
