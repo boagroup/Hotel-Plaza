@@ -1,8 +1,10 @@
-import java.util.Scanner;
 import interfaces.UI;
+
+import java.util.Scanner;
 /**
  * Main
  */
+
 public class Main implements UI {
 
     static boolean isLoggedIn = false;
@@ -17,17 +19,17 @@ public class Main implements UI {
                 MainMenu(sc, answer);
             }
         }
-        sc.close();
+
+    }
+
     /**
      * Enables the user to authenticate or to terminate the program
      */
     public static void loginMenu(Scanner sc, String answer) {
 
         while (!isLoggedIn) {
-            System.out.println("Pick an option: ");
-            System.out.println("1. Login\n2. Register\n3. Exit");
+            UI.printLoginMenu();
             answer = sc.nextLine();
-
             if (answer.equals("1")) {
                 Authentication.login();
                 if (Authentication.isLoginSuccessful()) {
@@ -44,12 +46,12 @@ public class Main implements UI {
             else if (answer.equals("3")) {
                 System.exit(0);
             }
-            else if (answer.equals("4")) {                                                      //REMOVE THIS LINE FOR FINAL VERSION
-                Authentication.setLoggedInUser(new User("Admin","0", (byte) 5));       //REMOVE THIS LINE FOR FINAL VERSION
-                isLoggedIn = true;                                                              //REMOVE THIS LINE FOR FINAL VERSION
-                System.out.println("Authentication override for development purposes");         //REMOVE THIS LINE FOR FINAL VERSION
-                System.out.println(Authentication.getLoggedInUser());                           //REMOVE THIS LINE FOR FINAL VERSION
-            }                                                                                   //REMOVE THIS LINE FOR FINAL VERSION
+            else if (answer.equals("4")) { // CHANGE THE VALUE OF THIS LINE FOR FINAL VERSION
+                Authentication.setLoggedInUser(new User("Admin","0", (byte) 5));
+                isLoggedIn = true;
+                System.out.println("Authentication override for development purposes");
+                System.out.println(Authentication.getLoggedInUser());
+            }
             else {
                 System.out.println("Invalid input. Retry.");
             }
@@ -57,15 +59,8 @@ public class Main implements UI {
     }
     public static void MainMenu(Scanner sc, String answer) {
         mainLoop:
-        while (!isLoggedIn) {
-            System.out.println("Pick an option: ");
-            System.out.println("1. Login\n2. Register\n3. Exit");
-            answer = sc.nextLine();
-
-            if (answer.equals("1")) {
-                Authentication.login();
-                if (Authentication.isLoginSuccessful()) {
-                    isLoggedIn = true;
+        while (isLoggedIn) {
+            UI.printMainMenu();
             answer = sc.nextLine();
             switch (answer) {
                 case "1":
@@ -82,31 +77,50 @@ public class Main implements UI {
                     break;
                 case "5":
                     System.out.println("Logging out...");
-                    Interface.loadingScreen();
+                    UI.loadingScreen();
                     Authentication.setLoggedInUser(null);
                     isLoggedIn = false;
                     break;
-
                 default:
                     System.out.println("Invalid Option");
                     return;
             }
         }
     }
-    public static void BookingsMenu(Scanner sc, String answer) {
-        UI.printBookingsMenu();
-        sc.nextLine();
-    }
-    public static void RoomsMenu(Scanner sc, String answer) {
-        UI.printRoomsMenu();
-        sc.nextLine();
-    }
+    public static void BookingsMenu(Scanner sc, String answer) {}
+    public static void RoomsMenu(Scanner sc, String answer) {}
     public static void StaffMenu(Scanner sc, String answer) {
-        UI.printStaffMenu();
-        sc.nextLine();
+
+        while (true) {
+            UI.menuLogo("Staff Menu");
+            System.out.println(
+                    "Pick an option: " +
+                            "\n1. Add Staff" +
+                            "\n2. Manage Staff" +
+                            "\n3. List System Users" +
+                            "\n4. Go back");
+            answer = sc.nextLine();
+            switch (answer) {
+                case "1":
+                    System.out.println("Nothing here yet");
+                    break;
+
+                case "2":
+                    System.out.println("Nope");
+                    break;
+
+                case "3":
+                    Authentication.listUsers();
+                    break;
+
+                case "4":
+                    return;
+
+                default:
+                    System.out.println("Invalid option");
+                    break;
+            }
+        }
     }
-    public static void FinanceMenu(Scanner sc, String answer) {
-        UI.printFinanceMenu();
-        sc.nextLine();
-    }
+    public static void FinanceMenu(Scanner sc, String answer) {}
 }

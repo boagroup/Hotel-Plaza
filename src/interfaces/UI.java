@@ -47,6 +47,7 @@ public interface UI {
 		                "Please Log in or register your account to continue.\n\n" +
 		                "1. Log in\n" +
 		                "2. Register\n" +
+						"3. Exit\n" +
 		                inputQuestion;
 	    System.out.println(menu);
 	 }
@@ -60,7 +61,7 @@ public interface UI {
 		                "2. See Room Menu\n" +
 		                "3. See Staff Menu\t\t\t\t" +
 		                "4. See Finance Options\n" +
-						"\t\t\t\t\t5. Exit\n" +
+						"\t\t\t\t\t5. Log out\n" +
 		                inputQuestion;
 		 System.out.println(menu);
 	 }
@@ -121,5 +122,36 @@ public interface UI {
 		} catch(InterruptedException ex) {
 			Thread.currentThread().interrupt();
 		}
+	}
+
+	static void wait(int ms) {
+		try {
+			Thread.sleep(ms);
+		}
+		catch(InterruptedException ex) {
+			Thread.currentThread().interrupt();
+		}
+	}
+
+	static void loadingScreen() {
+		System.out.println("\n");
+		System.out.print("||");
+		wait(500);
+		System.out.print("==========");
+		wait(500);
+		System.out.print("==========");
+		wait(500);
+		System.out.print("==========");
+		wait(500);
+		System.out.print("==========");
+		wait(500);
+		System.out.print("||");
+		System.out.println("\n");
+	}
+
+	public static void menuLogo(String menuName) {
+		System.out.println("\n||||||||||||||||||||||||||||||||||||||||||||||||||");
+		System.out.println("                   " + menuName);
+		System.out.println("||||||||||||||||||||||||||||||||||||||||||||||||||\n");
 	}
 }
