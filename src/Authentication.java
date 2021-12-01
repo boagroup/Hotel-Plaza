@@ -77,7 +77,7 @@ public class Authentication implements Serializable {
                 userArrayList.add(new User(userName, userPass, userPermission));
                 saveUsers();
                 System.out.println("Registration successful. Returning to start menu");
-                Interface.loadingScreen();
+                UI.loadingScreen();
             }
         }
 
@@ -86,7 +86,7 @@ public class Authentication implements Serializable {
             userArrayList.add(new User(userName, userPass, userPermission));
             saveUsers();
             System.out.println("First registration successful. Returning to start menu");
-            Interface.loadingScreen();
+            UI.loadingScreen();
         }
     }
 
@@ -127,7 +127,7 @@ public class Authentication implements Serializable {
                 }
             }
             if (isLoginSuccessful()) {
-                Interface.loadingScreen();
+                UI.loadingScreen();
                 System.out.println("You are now logged in.");
                 System.out.println(loggedInUser); // REMOVE THIS LINE FOR FINAL VERSION
                 break;
@@ -189,7 +189,7 @@ public class Authentication implements Serializable {
         /* Prints out the list if the user is an admin */
         if (loggedInUser.getUsername().equals("Admin")) {
             System.out.println("Listing users with admin permission levels...\n");
-            Interface.loadingScreen();
+            UI.loadingScreen();
 
             /* Handles the list if the "Users.ser" file exists */
             File f = new File("Users.ser");
@@ -216,7 +216,7 @@ public class Authentication implements Serializable {
 
         /* Prints out the censored list for regular users */
         else {
-            Interface.loadingScreen();
+            UI.loadingScreen();
             for (User user : loadUsers()) {
                 System.out.println();
                 System.out.println("<=================================>");

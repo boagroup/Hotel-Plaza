@@ -84,7 +84,7 @@ public class Main {
                     break;
                 case "5":
                     System.out.println("Logging out...");
-                    Interface.loadingScreen();
+                    UI.loadingScreen();
                     Authentication.setLoggedInUser(null);
                     isLoggedIn = false;
                     break;
@@ -100,7 +100,7 @@ public class Main {
     public static void StaffMenu(Scanner sc, String answer) {
 
         while (true) {
-            Interface.menuLogo("Staff Menu");
+            UI.menuLogo("Staff Menu");
             System.out.println(
                     "Pick an option: " +
                             "\n1. Add Staff" +
