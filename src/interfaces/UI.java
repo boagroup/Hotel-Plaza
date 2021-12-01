@@ -96,9 +96,11 @@ public interface UI {
 		printLogo();
 		String menu =   title +
 						credits + "\n" +
-						"1. Add Staff\n" +
+						"1. Add Staff\t\t\t\t\t" +
 						"2. Manage Staff\n" +
-						"3. Exit\n" +
+						"3. List System Users\t\t\t" +
+						"4. Remove User\n" +
+						"\t\t\t\t\t5. Go back\n" +
 						inputQuestion;
 		System.out.println(menu);
 	 }

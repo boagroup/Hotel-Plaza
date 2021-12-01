@@ -92,14 +92,7 @@ public class Main implements UI {
     public static void StaffMenu(Scanner sc, String answer) {
 
         while (true) {
-            UI.menuLogo("Staff Menu");
-            System.out.println(
-                    "Pick an option: " +
-                            "\n1. Add Staff" +
-                            "\n2. Manage Staff" +
-                            "\n3. List System Users" +
-                            "\n4. Remove User" +
-                            "\n5. Go back");
+            UI.printStaffMenu();
             answer = sc.nextLine();
             switch (answer) {
                 case "1":
