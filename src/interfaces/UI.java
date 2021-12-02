@@ -3,6 +3,8 @@ package interfaces;
  * UI
  */
 public interface UI {
+
+	/* Attributes to store String elements for repeatability purposes */
 	String logo =
 			"\n" +
 			"██╗░░██╗░█████╗░████████╗███████╗██╗░░░░░  ██████╗░██╗░░░░░░█████╗░███████╗░█████╗░\n" +
@@ -17,6 +19,11 @@ public interface UI {
 	String inputQuestion = "\nWhat do you wish to do?\n";
 
 
+	/**
+	 * Platform-independent function that clears the screen on the Java console.
+	 *
+	 * Works by printing a large amount of characters that are removed by a plugin.
+	 */
 	static void clearScreen() {
 		try {
 			System.out.print("clear");
@@ -34,11 +41,19 @@ public interface UI {
 		}
 	}
 
+
+	/**
+	 * Clears the screen, then prints out the logo attribute containing ASCII art.
+	 */
      static void printLogo() {
 		clearScreen();
 		System.out.println(logo);
      }
 
+
+	/**
+	 * Adds delay and prints logo for aesthetics, then prints out the options available in the "login" screen.
+	 */
 	 static void printLoginMenu() {
 		sleep();
 		printLogo();
@@ -51,6 +66,10 @@ public interface UI {
 	    System.out.println(menu);
 	 }
 
+
+	/**
+	 * Adds delay and prints logo for aesthetics, then prints out the options available in the "Main Menu" screen.
+	 */
 	 static void printMainMenu() {
 		sleep();
 		printLogo();
@@ -65,6 +84,10 @@ public interface UI {
 		 System.out.println(menu);
 	 }
 
+
+	/**
+	 * Adds delay and prints logo for aesthetics, then prints out the options available in the "Bookings Menu" section.
+	 */
 	 static void printBookingsMenu() {
 		sleep();
 		printLogo();
@@ -78,6 +101,10 @@ public interface UI {
 	    System.out.println(menu);
 	 }
 
+
+	/**
+		 * Adds delay and prints logo for aesthetics, then prints out the options available in the "Rooms Menu" section.
+	 */
 	 static void printRoomsMenu() {
 		sleep();
 		printLogo();
@@ -91,6 +118,10 @@ public interface UI {
 		 System.out.println(menu);
 	 }
 
+
+	/**
+	 * Adds delay and prints logo for aesthetics, then prints out the options available in the "Staff Menu" section.
+	 */
 	 static void printStaffMenu() {
 		sleep();
 		printLogo();
@@ -105,6 +136,10 @@ public interface UI {
 		System.out.println(menu);
 	 }
 
+
+	/**
+	 * Adds delay and prints logo for aesthetics, then prints out the options available in the "Finance Menu" section.
+	 */
 	 static void printFinanceMenu() {
 		sleep();
 		printLogo();
@@ -117,6 +152,10 @@ public interface UI {
 		System.out.println(menu);
 	 }
 
+
+	/**
+	 * Adds one second of delay for aesthetic purposes
+	 */
 	static void sleep() {
 		try {
 			Thread.sleep(1000);
@@ -125,6 +164,11 @@ public interface UI {
 		}
 	}
 
+
+	/**
+	 * Adds a custom amount of delay for aesthetic purposes
+	 * @param ms Amount of delay in milliseconds
+	 */
 	static void wait(int ms) {
 		try {
 			Thread.sleep(ms);
@@ -134,23 +178,32 @@ public interface UI {
 		}
 	}
 
+
+	/**
+	 * Simulates a loading bar filling up using symbols and delay functions.
+	 */
 	static void loadingScreen() {
 		System.out.println("\n");
 		System.out.print("||");
-		wait(500);
-		System.out.print("==========");
-		wait(500);
-		System.out.print("==========");
-		wait(500);
-		System.out.print("==========");
-		wait(500);
-		System.out.print("==========");
-		wait(500);
+		wait(300);
+		System.out.print("====================");
+		wait(300);
+		System.out.print("====================");
+		wait(300);
+		System.out.print("====================");
+		wait(300);
+		System.out.print("====================");
+		wait(300);
 		System.out.print("||");
 		System.out.println("\n");
 	}
 
-	public static void menuLogo(String menuName) {
+
+	/**
+	 * Prints out a simple logo
+	 * @param menuName Custom String value to create a simple logo for each menu
+	 */
+	static void menuLogo(String menuName) { //To be deleted soon if of no use
 		System.out.println("\n||||||||||||||||||||||||||||||||||||||||||||||||||");
 		System.out.println("                   " + menuName);
 		System.out.println("||||||||||||||||||||||||||||||||||||||||||||||||||\n");

@@ -9,12 +9,14 @@ public class Authentication implements Serializable {
     private static User loggedInUser;
     private static boolean loginSuccessful = false;
     private static boolean nameIsRepeated = false;
-    private static ArrayList<User> userArrayList = new ArrayList<User>();
+    private static ArrayList<User> userArrayList = new ArrayList<>();
 
     /**
-     * Registers a new user to the System
-     * The registration is complete once a new User object has been stored in a "Users.ser" file
-     * Has built-in failsafe features to prevent the program from crashing
+     * Registers a new user to the System.
+     *
+     * The registration is complete once a new User object has been stored in a "Users.ser" file.
+     *
+     * Has built-in failsafe features to prevent the program from crashing.
      */
     public static void register() {
 
@@ -36,7 +38,21 @@ public class Authentication implements Serializable {
 
         /* User input */
         System.out.println("Please insert your new username:");
-        String userName = sc.nextLine();
+        String userName;
+
+        /* Loop used for failsafe mechanism */
+        while (true) {
+            userName = sc.nextLine();
+
+            /* Preventing user from creating an Admin user */
+            if (userName.equals("Admin")) {
+                System.out.println("\nRestricted username.\nPick another.");
+            }
+            else {
+                break;
+            }
+        }
+
         System.out.println("Please insert your new password:");
         String userPass = sc.nextLine();
         System.out.println("Please insert the permission level of the user:\n" +
@@ -46,11 +62,16 @@ public class Authentication implements Serializable {
                 "     3: Advanced User (e.g. Accountant, GM)\n" +
                 "     4: Full-permission User (e.g. Director)");
         byte userPermission = 0;
+
+        /* Loop used for failsafe mechanism */
         while (true) {
+
+            /* Preventing user from inserting invalid input */
             try {
                 userPermission = Byte.parseByte(sc.nextLine());
                 break;
-            } catch (NumberFormatException exception) {
+            }
+            catch (NumberFormatException exception) {
                 System.out.println("Oops! That's not a valid number.\nTry again.");
             }
         }
@@ -94,9 +115,11 @@ public class Authentication implements Serializable {
 
 
     /**
-     * Logs in an existing user to the System
-     * The login is complete once an existing User from the "Users.ser" file is stored in the loggedInUser attribute
-     * Has built-in failsafe features to prevent the program from crashing
+     * Logs in an existing user to the System.
+     *
+     * The login is complete once an existing User from the "Users.ser" file is stored in the loggedInUser attribute.
+     *
+     * Has built-in failsafe features to prevent the program from crashing.
      */
     public static void login() {
 
@@ -143,8 +166,9 @@ public class Authentication implements Serializable {
         }
     }
 
+
     /**
-     * Serializes userArrayList to "Users.ser" file
+     * Serializes userArrayList to "Users.ser" file.
      */
     public static void saveUsers() {
         try {
@@ -159,8 +183,9 @@ public class Authentication implements Serializable {
         }
     }
 
+
     /**
-     * Returns deserialized ArrayList of Users from "Users.ser" file
+     * Returns deserialized ArrayList of Users from "Users.ser" file.
      */
     public static ArrayList<User> loadUsers() {
         ArrayList<User> u = null;
@@ -180,17 +205,22 @@ public class Authentication implements Serializable {
         }
         return u;
     }
+
+
     /**
-     * Prints out a list with all the users stored in memory in the "Users.ser" file
-     * The "password" attribute of each User gets censored for security purposes by default
-     * The censorship can be overwritten if the user is an admin
-     * Has built-in failsafe features to prevent the program from crashing
+     * Prints out a list with all the users stored in memory in the "Users.ser" file.
+     *
+     * The "password" attribute of each User gets censored for security purposes by default.
+     *
+     * The censorship can be overwritten if the user is an admin.
+     *
+     * Has built-in failsafe features to prevent the program from crashing.
      */
     public static void listUsers() {
 
         /* Prints out the list if the user is an admin */
         if (loggedInUser.getUsername().equals("Admin")) {
-            System.out.println("Listing users with admin permission levels...\n");
+            System.out.println("\nListing users with admin permission levels...\n");
             UI.loadingScreen();
 
             /* Handles the list if the "Users.ser" file exists */
@@ -207,11 +237,12 @@ public class Authentication implements Serializable {
                 }
             }
             else if (f.exists() && (loadUsers().isEmpty())) {
-                System.out.println("All of the users have been deleted.");
+                System.out.println("\nAll of the users have been deleted.");
             }
 
             /* Handles the list if the "Users.ser" file does not exist */
             else {
+                System.out.println();
                 System.out.println("No users have been registered yet.");
                 System.out.println("The Admin user is not stored in memory.");
                 System.out.println("Stop trying to break the program."); // REMOVE THIS LINE
@@ -233,31 +264,105 @@ public class Authentication implements Serializable {
                 System.out.println();
             }
         }
+        System.out.println("\nInsert any key to go back");
+        Scanner waiting = new Scanner(System.in);
+        waiting.nextLine();
     }
 
-    public static void removeUser() {
-        File f = new File("Users.ser");
-        if (f.exists()) {
-            System.out.println("Saved Users:");
-            int i = 1;
-            for (User user : loadUsers()) {
-                System.out.println(i++ + ". " + user.getUsername());
-            }
-            if(!userArrayList.isEmpty()) {
-            System.out.println("Type the number of the User that you want to remove:");
-            Scanner sc = new Scanner(System.in);
-            String answer = sc.nextLine();
-            userArrayList = Authentication.loadUsers();
 
-                userArrayList.remove(Integer.parseInt(answer) - 1);
+    /**
+     * Prints out a list with all the users stored in memory in the "Users.ser" file.
+     *
+     * The authorized user can select one of the users by typing its associated number.
+     *
+     * The selected user will be deleted from the "Users.ser" file.
+     *
+     * Has built-in failsafe features to prevent the program from crashing.
+     *
+     */
+    public static void removeUser() {
+        if (loggedInUser.getPermission() >= 3) {
+
+            /* Check if "Users.ser" file exists */
+            File f = new File("Users.ser");
+
+            /* If it does, iterate through each user and print out
+            their names alongside their incremented indexes */
+            if (f.exists()) {
+                System.out.println("Saved Users:");
+                int i = 1;
+                for (User user : loadUsers()) {
+                    System.out.println(i++ + ". " + user.getUsername());
+                }
+
+                /* Assign the deserialized ArrayList from "Users.ser"
+                to the "userArrayList" attribute */
+                userArrayList = Authentication.loadUsers();
+
+                /* If "userArrayList" is NOT empty, request user input */
+                if (!userArrayList.isEmpty()) {
+                    System.out.println("\nType the number of the User that you want to remove:");
+                    Scanner sca = new Scanner(System.in);
+                    String answer = sca.nextLine();
+
+                    /* Try to parse the String input to an integer and remove
+                    the user who corresponds to the decremented input */
+                    try {
+
+                        /* Assign the user to be removed to an auxiliary User object */
+                        User toBeRemoved = userArrayList.get(Integer.parseInt(answer) - 1);
+
+                        /* If the name of the user who is logged in does not match the user to be removed... */
+                        if (!loggedInUser.getUsername().equals(toBeRemoved.getUsername())) {
+
+                            /* If the logged-in user has appropriate permission levels... */
+                            if(loggedInUser.getPermission() > toBeRemoved.getPermission()) {
+
+                                /* Success scenario; User is removed */
+                                userArrayList.remove(Integer.parseInt(answer) - 1);
+                                System.out.println("\nUser removed successfully.");
+                                UI.wait(1500);
+                            }
+
+                            /* If the logged-in user does not have the appropriate permission levels */
+                            else {
+                                System.out.println("You cannot remove users with higher permission levels than you!");
+                                UI.wait(2750);
+                            }
+
+                        }
+
+                        /* If the usernames match, print error message, as you cannot remove yourself */
+                        else {
+                            System.out.println("\nYou cannot remove yourself!");
+                            UI.wait(2000);
+                        }
+
+                    }
+                        /* If it cannot parse, print an error message */
+                    catch (Exception e) {
+                        System.out.println("\nInvalid input");
+                        UI.wait(1000);
+                    }
+                }
+
+                /* If "userArrayList" is empty, print error because all users must have been deleted */
+                else {
+                    System.out.println("\nOut of users to remove.");
+                    UI.wait(1550);
+                }
+                saveUsers();
             }
+            /* If the "Users.ser" file does not exist, print
+            error message (only possible in admin mode) */
             else {
-                System.out.println("Out of users to remove.");
+                System.out.println("\nNo users have been registered yet.");
+                UI.wait(1750);
             }
-            saveUsers();
         }
         else {
-            System.out.println("No users have been registered yet.");
+            System.out.println("\nYou do not have permission to remove users.");
+            UI.wait(2000);
         }
     }
 

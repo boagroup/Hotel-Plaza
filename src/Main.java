@@ -95,23 +95,23 @@ public class Main implements UI {
             UI.printStaffMenu();
             answer = sc.nextLine();
             switch (answer) {
-                case "1":
+                case "1": // See Bookings Menu
                     System.out.println("Nothing here yet");
                     break;
 
-                case "2":
+                case "2": // See Room Menu
                     System.out.println("Nope");
                     break;
 
-                case "3":
+                case "3": // See Staff Menu
                     Authentication.listUsers();
                     break;
 
-                case "4":
+                case "4": // See Finance Options
                     Authentication.removeUser();
                     break;
 
-                case "5":
+                case "5": // Log out
                     return;
 
                 default:
