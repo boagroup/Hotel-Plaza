@@ -1,5 +1,3 @@
-
-
 import java.util.Scanner;
 /**
  * Main
@@ -30,36 +28,45 @@ public class Main {
         while (!isLoggedIn) {
             UI.printLoginMenu();
             answer = sc.nextLine();
-            if (answer.equals("1")) {
-                Authentication.login();
-                if (Authentication.isLoginSuccessful()) {
+            switch (answer) {
+
+                case "1": // Login
+                    Authentication.login();
+                    if (Authentication.isLoginSuccessful()) {
+                        isLoggedIn = true;
+                        Authentication.setLoginSuccessful(false);
+                    } else {
+                        System.out.println("\nLogin unsuccessful. Try again.");
+                        UI.wait(750);
+                    }
+                    break;
+
+                case "2": // Register
+                    Authentication.register();
+                    break;
+
+                case "3": // Terminate program
+                    System.exit(0);
+                    break;
+
+                // CHANGE THE VALUE OF CASE "4" TO "Admin" FOR FINAL VERSION
+                case "4": // Overwrite login as Admin
+
+                    Authentication.setLoggedInUser(new User("Admin", "0", (byte) 127));
                     isLoggedIn = true;
-                    Authentication.setLoginSuccessful(false);
-                }
-                else {
-                    System.out.println("\nLogin unsuccessful. Try again.");
-                    UI.wait(750);
-                }
-            }
-            else if (answer.equals("2")) {
-                Authentication.register();
-            }
-            else if (answer.equals("3")) {
-                System.exit(0);
-            }
-            else if (answer.equals("4")) { // CHANGE THE VALUE OF THIS LINE FOR FINAL VERSION
-                Authentication.setLoggedInUser(new User("Admin","0", (byte) 127));
-                isLoggedIn = true;
-                System.out.println("\nAuthentication override for development purposes");
-                System.out.println(Authentication.getLoggedInUser());
-                UI.wait(1000);
-            }
-            else {
-                System.out.println("\nInvalid input. Retry.");
-                UI.wait(300);
+                    System.out.println("\nAuthentication override for development purposes");
+                    System.out.println(Authentication.getLoggedInUser());
+                    UI.wait(1000);
+                    break;
+
+                default: // Invalid user input
+                    System.out.println("\nInvalid input. Retry.");
+                    UI.wait(300);
+                    return;
             }
         }
     }
+
     public static void MainMenu(Scanner sc, String answer) {
         mainLoop:
         while (isLoggedIn) {
