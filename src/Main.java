@@ -55,8 +55,7 @@ public class Main {
                     Authentication.setLoggedInUser(new User("Admin", "0", (byte) 127));
                     isLoggedIn = true;
                     System.out.println("\nAuthentication override for development purposes");
-                    System.out.println(Authentication.getLoggedInUser());
-                    UI.wait(1000);
+                    UI.wait(1250);
                     break;
 
                 default: // Invalid user input

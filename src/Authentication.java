@@ -9,6 +9,7 @@ public class Authentication implements Serializable {
     private static boolean nameIsRepeated = false;
     private static ArrayList<User> userArrayList = new ArrayList<>();
 
+
     /**
      * Registers a new user to the System.
      *
@@ -153,8 +154,7 @@ public class Authentication implements Serializable {
             if (isLoginSuccessful()) {
                 UI.loadingScreen();
                 System.out.println("\nYou are now logged in.");
-                System.out.println(loggedInUser); // REMOVE THIS LINE FOR FINAL VERSION
-                UI.wait(1000);
+                UI.wait(1250);
                 break;
             }
 
