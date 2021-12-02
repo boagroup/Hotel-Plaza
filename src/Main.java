@@ -105,23 +105,23 @@ public class Main {
             UI.printStaffMenu();
             answer = sc.nextLine();
             switch (answer) {
-                case "1": // See Bookings Menu
+                case "1": // Add Staff
                     System.out.println("Nothing here yet");
                     break;
 
-                case "2": // See Room Menu
+                case "2": // Manage Staff
                     System.out.println("Nope");
                     break;
 
-                case "3": // See Staff Menu
+                case "3": // List Users
                     Authentication.listUsers();
                     break;
 
-                case "4": // See Finance Options
+                case "4": // Remove User
                     Authentication.removeUser();
                     break;
 
-                case "5": // Log out
+                case "5": // Go back
                     return;
 
                 default:

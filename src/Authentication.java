@@ -21,14 +21,10 @@ public class Authentication implements Serializable {
 
         /* Password required to use the register function */
         Scanner sc = new Scanner(System.in);
-        System.out.println("\nInsert security password:\nIf you don't know the password, type \"1\" to go back");
+        System.out.println("\nInsert security PIN:\nIf you don't know the PIN, insert anything to go back");
         String securityPass = sc.nextLine();
         if (securityPass.equals("2137")) {
             System.out.println("\nPermission granted");
-        }
-        else if (securityPass.equals("1")) {
-            UI.printLoginMenu();
-            return;
         }
         else {
             System.out.println("\nIncorrect password.");
@@ -223,6 +219,7 @@ public class Authentication implements Serializable {
         if (loggedInUser.getUsername().equals("Admin")) {
             System.out.println("\nListing users with admin permission levels...\n");
             UI.loadingScreen();
+            UI.clearScreen();
 
             /* Handles the list if the "Users.ser" file exists */
             File f = new File("Users.ser");
@@ -246,7 +243,6 @@ public class Authentication implements Serializable {
                 System.out.println();
                 System.out.println("No users have been registered yet.");
                 System.out.println("The Admin user is not stored in memory.");
-                System.out.println("Stop trying to break the program."); // REMOVE THIS LINE
                 System.out.println();
             }
         }
@@ -254,6 +250,7 @@ public class Authentication implements Serializable {
         /* Prints out the censored list for regular users */
         else {
             UI.loadingScreen();
+            UI.clearScreen();
             for (User user : loadUsers()) {
                 System.out.println();
                 System.out.println("<=================================>");
@@ -322,7 +319,7 @@ public class Authentication implements Serializable {
                                 /* Success scenario; User is removed */
                                 userArrayList.remove(Integer.parseInt(answer) - 1);
                                 System.out.println("\nUser removed successfully.");
-                                UI.wait(1500);
+                                UI.wait(1000);
                             }
 
                             /* If the logged-in user does not have the appropriate permission levels */
