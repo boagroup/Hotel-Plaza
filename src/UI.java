@@ -20,13 +20,13 @@ public class UI {
 
     /**
      * Platform-independent function that clears the screen on the Java console.
-     *
+     * <p>
      * Works by printing a large amount of characters that are removed by a plugin.
      */
     static void clearScreen() {
         try {
             System.out.print("clear");
-            if(!System.getProperty("java.class.path").contains("idea_rt.jar")) {
+            if (!System.getProperty("java.class.path").contains("idea_rt.jar")) {
                 System.out.print("\033[H\033[2J");
                 System.out.flush();
                 if (System.getProperty("os.name").contains("Windows")) {
@@ -56,7 +56,7 @@ public class UI {
     static void printLoginMenu() {
         sleep();
         printLogo();
-        String menu =   "Welcome to the " + title +
+        String menu = "Welcome to the " + title +
                 "Please log in or register your account to continue.\n\n" +
                 "1. Log in\n" +
                 "2. Register\n" +
@@ -72,8 +72,9 @@ public class UI {
     static void printMainMenu() {
         sleep();
         printLogo();
-        String menu =   title +
-                credits + "\n" +
+        String menu = title +
+                credits +
+                returnCurrentUser() + "\n" +
                 "1. See Bookings Menu\t\t\t" +
                 "2. See Room Menu\n" +
                 "3. See Staff Menu\t\t\t\t" +
@@ -90,8 +91,9 @@ public class UI {
     static void printBookingsMenu() {
         sleep();
         printLogo();
-        String menu =   title +
-                credits + "\n" +
+        String menu = title +
+                credits +
+                returnCurrentUser() + "\n" +
                 "1. Create Booking\n" +
                 "2. Manage Bookings\n" +
                 "3. Display Inhouse Report\n" +
@@ -107,8 +109,9 @@ public class UI {
     static void printRoomsMenu() {
         sleep();
         printLogo();
-        String menu =   title +
-                credits + "\n" +
+        String menu = title +
+                credits +
+                returnCurrentUser() + "\n" +
                 "1. Add Room\n" +
                 "2. Manage Rooms\n" +
                 "3. Display Room Availability\n" +
@@ -124,8 +127,9 @@ public class UI {
     static void printStaffMenu() {
         sleep();
         printLogo();
-        String menu =   title +
-                credits + "\n" +
+        String menu = title +
+                credits +
+                returnCurrentUser() + "\n" +
                 "1. Add Staff\t\t\t\t\t" +
                 "2. Manage Staff\n" +
                 "3. List System Users\t\t\t" +
@@ -142,8 +146,9 @@ public class UI {
     static void printFinanceMenu() {
         sleep();
         printLogo();
-        String menu =   title +
-                credits + "\n" +
+        String menu = title +
+                credits +
+                returnCurrentUser() + "\n" +
                 "1. See Income Report\n" +
                 "2. File Taxes\n" +
                 "3. Exit" +
@@ -158,7 +163,7 @@ public class UI {
     static void sleep() {
         try {
             Thread.sleep(1000);
-        } catch(InterruptedException ex) {
+        } catch (InterruptedException ex) {
             Thread.currentThread().interrupt();
         }
     }
@@ -166,13 +171,13 @@ public class UI {
 
     /**
      * Adds a custom amount of delay for aesthetic purposes
+     *
      * @param ms Amount of delay in milliseconds
      */
     static void wait(int ms) {
         try {
             Thread.sleep(ms);
-        }
-        catch(InterruptedException ex) {
+        } catch (InterruptedException ex) {
             Thread.currentThread().interrupt();
         }
     }
@@ -197,9 +202,27 @@ public class UI {
         System.out.println("\n");
     }
 
+    /**
+     * Returns a String containing a message with the current user's username and permission level.
+     *
+     * Should not be used in places where the user is not logged in yet, e.g. "loginMenu"
+     *
+     * Will not crash if misplaced. Has to be a function instead of a variable otherwise the program won't compile
+     */
+    static String returnCurrentUser() {
+        try {
+            String s = "\nYou are currently logged in as user " + "\"" + Authentication.getLoggedInUser().getUsername() + "\"" + " with permission level " + Authentication.getLoggedInUser().getPermission() + "\n";
+            return s;
+        }
+       catch (Exception e) {
+            String error;
+            return  error = "\nUser not logged in yet";
+        }
+    }
 
     /**
      * Prints out a simple logo
+     *
      * @param menuName Custom String value to create a simple logo for each menu
      */
     static void menuLogo(String menuName) { //To be deleted soon if of no use
