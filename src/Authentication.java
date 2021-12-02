@@ -1,5 +1,3 @@
-import interfaces.UI;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -22,22 +20,22 @@ public class Authentication implements Serializable {
 
         /* Password required to use the register function */
         Scanner sc = new Scanner(System.in);
-        System.out.println("Insert security password:\nIf you don't know the password, type \"1\" to go back");
+        System.out.println("\nInsert security password:\nIf you don't know the password, type \"1\" to go back");
         String securityPass = sc.nextLine();
         if (securityPass.equals("2137")) {
-            System.out.println("Permission granted");
+            System.out.println("\nPermission granted");
         }
         else if (securityPass.equals("1")) {
             UI.printLoginMenu();
             return;
         }
         else {
-            System.out.println("Incorrect password.");
+            System.out.println("\nIncorrect password.");
             return;
         }
 
         /* User input */
-        System.out.println("Please insert your new username:");
+        System.out.println("\nPlease insert your new username:");
         String userName;
 
         /* Loop used for failsafe mechanism */
@@ -53,9 +51,9 @@ public class Authentication implements Serializable {
             }
         }
 
-        System.out.println("Please insert your new password:");
+        System.out.println("\nPlease insert your new password:");
         String userPass = sc.nextLine();
-        System.out.println("Please insert the permission level of the user:\n" +
+        System.out.println("\nPlease insert the permission level of the user:\n" +
                 "     RECOMMENDED PERMISSION LEVELS:\n" +
                 "     1: Basic User (e.g. Receptionist)\n" +
                 "     2: Intermediate User (e.g. Manager)\n" +
@@ -72,7 +70,7 @@ public class Authentication implements Serializable {
                 break;
             }
             catch (NumberFormatException exception) {
-                System.out.println("Oops! That's not a valid number.\nTry again.");
+                System.out.println("\nOops! That's not a valid number.\nTry again.");
             }
         }
 
@@ -90,8 +88,9 @@ public class Authentication implements Serializable {
 
             /* Handle repeated username */
             if (nameIsRepeated) {
-                System.out.println("Error! That account already exists. Please try again.");
+                System.out.println("\nError! That account already exists. Please try again.");
                 nameIsRepeated = false; // resetting the variable, otherwise the error will persist
+                UI.wait(1500);
             }
 
             /* If username is not repeated, save user to file */
@@ -99,7 +98,7 @@ public class Authentication implements Serializable {
                 userArrayList = loadUsers();
                 userArrayList.add(new User(userName, userPass, userPermission));
                 saveUsers();
-                System.out.println("Registration successful. Returning to start menu");
+                System.out.println("\nRegistration successful. Returning to start menu");
                 UI.loadingScreen();
             }
         }
@@ -108,7 +107,7 @@ public class Authentication implements Serializable {
         else {
             userArrayList.add(new User(userName, userPass, userPermission));
             saveUsers();
-            System.out.println("First registration successful. Returning to start menu");
+            System.out.println("\nFirst registration successful. Returning to start menu");
             UI.loadingScreen();
         }
     }
@@ -126,7 +125,7 @@ public class Authentication implements Serializable {
         /* Prevent crash if no users have been registered yet */
         File f = new File("Users.ser");
         if (!f.exists()) {
-            System.out.println("No users registered.");
+            System.out.println("\nNo users registered.");
             return;
         }
 
@@ -135,10 +134,10 @@ public class Authentication implements Serializable {
         while (!isLoginSuccessful()) {
 
             /* User input */
-            System.out.println("Please enter your username:");
+            System.out.println("\nPlease enter your username:");
             Scanner sca = new Scanner(System.in);
             String userName = sca.nextLine();
-            System.out.println("Please enter your password:");
+            System.out.println("\nPlease enter your password:");
             String userPass = sca.nextLine();
 
             /* Handles login if user input matches a User object from the serialized file */
@@ -153,14 +152,16 @@ public class Authentication implements Serializable {
             }
             if (isLoginSuccessful()) {
                 UI.loadingScreen();
-                System.out.println("You are now logged in.");
+                System.out.println("\nYou are now logged in.");
                 System.out.println(loggedInUser); // REMOVE THIS LINE FOR FINAL VERSION
+                UI.wait(1000);
                 break;
             }
 
             /* Handles login if no match is found */
             else {
-                System.out.println("Uh oh!\nIncorrect credentials.");
+                System.out.println("\nUh oh!\nIncorrect credentials.");
+                UI.wait(350);
             }
             break;
         }
@@ -316,7 +317,7 @@ public class Authentication implements Serializable {
                         if (!loggedInUser.getUsername().equals(toBeRemoved.getUsername())) {
 
                             /* If the logged-in user has appropriate permission levels... */
-                            if(loggedInUser.getPermission() > toBeRemoved.getPermission()) {
+                            if(loggedInUser.getPermission() >= toBeRemoved.getPermission()) {
 
                                 /* Success scenario; User is removed */
                                 userArrayList.remove(Integer.parseInt(answer) - 1);
@@ -335,7 +336,7 @@ public class Authentication implements Serializable {
                         /* If the usernames match, print error message, as you cannot remove yourself */
                         else {
                             System.out.println("\nYou cannot remove yourself!");
-                            UI.wait(2000);
+                            UI.wait(1600);
                         }
 
                     }

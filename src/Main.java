@@ -1,11 +1,11 @@
-import interfaces.UI;
+
 
 import java.util.Scanner;
 /**
  * Main
  */
 
-public class Main implements UI {
+public class Main {
 
     static boolean isLoggedIn = false;
 
@@ -37,7 +37,8 @@ public class Main implements UI {
                     Authentication.setLoginSuccessful(false);
                 }
                 else {
-                    System.out.println("Login unsuccessful. Try again.");
+                    System.out.println("\nLogin unsuccessful. Try again.");
+                    UI.wait(750);
                 }
             }
             else if (answer.equals("2")) {
@@ -47,13 +48,15 @@ public class Main implements UI {
                 System.exit(0);
             }
             else if (answer.equals("4")) { // CHANGE THE VALUE OF THIS LINE FOR FINAL VERSION
-                Authentication.setLoggedInUser(new User("Admin","0", (byte) 5));
+                Authentication.setLoggedInUser(new User("Admin","0", (byte) 127));
                 isLoggedIn = true;
-                System.out.println("Authentication override for development purposes");
+                System.out.println("\nAuthentication override for development purposes");
                 System.out.println(Authentication.getLoggedInUser());
+                UI.wait(1000);
             }
             else {
-                System.out.println("Invalid input. Retry.");
+                System.out.println("\nInvalid input. Retry.");
+                UI.wait(300);
             }
         }
     }
@@ -76,13 +79,14 @@ public class Main implements UI {
                     FinanceMenu(sc, answer);
                     break;
                 case "5":
-                    System.out.println("Logging out...");
-                    UI.loadingScreen();
+                    System.out.println("\nLogging out...");
                     Authentication.setLoggedInUser(null);
                     isLoggedIn = false;
+                    UI.loadingScreen();
                     break;
                 default:
-                    System.out.println("Invalid Option");
+                    System.out.println("\nInvalid Option");
+                    UI.wait(150);
                     return;
             }
         }
@@ -115,7 +119,8 @@ public class Main implements UI {
                     return;
 
                 default:
-                    System.out.println("Invalid option");
+                    System.out.println("\nInvalid option");
+                    UI.wait(150);
                     break;
             }
         }
