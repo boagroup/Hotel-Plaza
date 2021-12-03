@@ -87,7 +87,7 @@ public class Authentication implements Serializable {
             if (nameIsRepeated) {
                 System.out.println("\nError! That account already exists. Please try again.");
                 nameIsRepeated = false; // resetting the variable, otherwise the error will persist
-                UI.wait(1500);
+                UI.sleep(1500);
             }
 
             /* If username is not repeated, save user to file */
@@ -150,14 +150,14 @@ public class Authentication implements Serializable {
             if (isLoginSuccessful()) {
                 UI.loadingScreen();
                 System.out.println("\nYou are now logged in.");
-                UI.wait(1250);
+                UI.sleep(1250);
                 break;
             }
 
             /* Handles login if no match is found */
             else {
                 System.out.println("\nUh oh!\nIncorrect credentials.");
-                UI.wait(350);
+                UI.sleep(350);
             }
             break;
         }
@@ -263,8 +263,8 @@ public class Authentication implements Serializable {
             }
         }
         System.out.println("\nInsert any key to go back");
-        Scanner waiting = new Scanner(System.in);
-        waiting.nextLine();
+        Scanner sleeping = new Scanner(System.in);
+        sleeping.nextLine();
     }
 
 
@@ -319,13 +319,13 @@ public class Authentication implements Serializable {
                                 /* Success scenario; User is removed */
                                 userArrayList.remove(Integer.parseInt(answer) - 1);
                                 System.out.println("\nUser removed successfully.");
-                                UI.wait(1000);
+                                UI.sleep(1000);
                             }
 
                             /* If the logged-in user does not have the appropriate permission levels */
                             else {
                                 System.out.println("You cannot remove users with higher permission levels than you!");
-                                UI.wait(2750);
+                                UI.sleep(2750);
                             }
 
                         }
@@ -333,21 +333,21 @@ public class Authentication implements Serializable {
                         /* If the usernames match, print error message, as you cannot remove yourself */
                         else {
                             System.out.println("\nYou cannot remove yourself!");
-                            UI.wait(1600);
+                            UI.sleep(1600);
                         }
 
                     }
                         /* If it cannot parse, print an error message */
                     catch (Exception e) {
                         System.out.println("\nInvalid input");
-                        UI.wait(1000);
+                        UI.sleep(1000);
                     }
                 }
 
                 /* If "userArrayList" is empty, print error because all users must have been deleted */
                 else {
                     System.out.println("\nOut of users to remove.");
-                    UI.wait(1550);
+                    UI.sleep(1550);
                 }
                 saveUsers();
             }
@@ -355,12 +355,12 @@ public class Authentication implements Serializable {
             error message (only possible in admin mode) */
             else {
                 System.out.println("\nNo users have been registered yet.");
-                UI.wait(1750);
+                UI.sleep(1750);
             }
         }
         else {
             System.out.println("\nYou do not have permission to remove users.");
-            UI.wait(2000);
+            UI.sleep(2000);
         }
     }
 
