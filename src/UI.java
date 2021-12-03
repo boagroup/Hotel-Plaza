@@ -234,7 +234,7 @@ public final class UI {
      * @param price Parameters might need to be adjusted to work with "Database" and "Item"
      * @param roomNum Parameters might need to be adjusted to work with "Database" and "Item"
      */
-    static void printReceipt(String guestName, double price, int roomNum) {
+    public static void printReceipt(String guestName, double price, int roomNum) {
         clearScreen();
         System.out.println(
                 "<=============================================================>" +
