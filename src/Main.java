@@ -8,22 +8,20 @@ public final class Main {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        String answer = null;
         while (true) {
             if (!isLoggedIn) {
-                loginMenu(sc, answer);
+                loginMenu(sc);
             } else {
-                MainMenu(sc, answer);
+                mainMenu(sc);
             }
         }
-
     }
 
     /**
      * Enables the user to authenticate or to terminate the program
      */
-    public static void loginMenu(Scanner sc, String answer) {
-
+    public static void loginMenu(Scanner sc) {
+        String answer;
         while (!isLoggedIn) {
             UI.printLoginMenu();
             answer = sc.nextLine();
@@ -65,23 +63,24 @@ public final class Main {
         }
     }
 
-    public static void MainMenu(Scanner sc, String answer) {
+    public static void mainMenu(Scanner sc) {
+        String answer;
         mainLoop:
         while (isLoggedIn) {
             UI.printMainMenu();
             answer = sc.nextLine();
             switch (answer) {
                 case "1":
-                    BookingsMenu(sc, answer);
+                    BookingsMenu(sc);
                     break;
                 case "2":
-                    RoomsMenu(sc, answer);
+                    RoomsMenu(sc);
                     break;
                 case "3":
-                    StaffMenu(sc, answer);
+                    StaffMenu(sc);
                     break;
                 case "4":
-                    FinanceMenu(sc, answer);
+                    FinanceMenu(sc);
                     break;
                 case "5":
                     System.out.println("\nLogging out...");
@@ -96,10 +95,16 @@ public final class Main {
             }
         }
     }
-    public static void BookingsMenu(Scanner sc, String answer) {}
-    public static void RoomsMenu(Scanner sc, String answer) {}
-    public static void StaffMenu(Scanner sc, String answer) {
+    public static void BookingsMenu(Scanner sc) {
+        String answer;
+    }
 
+    public static void RoomsMenu(Scanner sc) {
+        String answer;
+    }
+
+    public static void StaffMenu(Scanner sc) {
+        String answer;
         while (true) {
             UI.printStaffMenu();
             answer = sc.nextLine();
@@ -130,5 +135,8 @@ public final class Main {
             }
         }
     }
-    public static void FinanceMenu(Scanner sc, String answer) {}
+
+    public static void FinanceMenu(Scanner sc) {
+        String answer;
+    }
 }
