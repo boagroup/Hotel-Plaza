@@ -2,8 +2,7 @@ import java.util.Scanner;
 /**
  * Main
  */
-
-public class Main {
+public final class Main {
 
     static boolean isLoggedIn = false;
 
@@ -37,7 +36,7 @@ public class Main {
                         Authentication.setLoginSuccessful(false);
                     } else {
                         System.out.println("\nLogin unsuccessful. Try again.");
-                        UI.wait(750);
+                        UI.sleep(750);
                     }
                     break;
 
@@ -55,12 +54,12 @@ public class Main {
                     Authentication.setLoggedInUser(new User("Admin", "0", (byte) 127));
                     isLoggedIn = true;
                     System.out.println("\nAuthentication override for development purposes");
-                    UI.wait(1250);
+                    UI.sleep(1250);
                     break;
 
                 default: // Invalid user input
                     System.out.println("\nInvalid input. Retry.");
-                    UI.wait(300);
+                    UI.sleep(300);
                     return;
             }
         }
@@ -92,7 +91,7 @@ public class Main {
                     break;
                 default:
                     System.out.println("\nInvalid Option");
-                    UI.wait(150);
+                    UI.sleep(150);
                     return;
             }
         }
@@ -126,7 +125,7 @@ public class Main {
 
                 default:
                     System.out.println("\nInvalid option");
-                    UI.wait(150);
+                    UI.sleep(150);
                     break;
             }
         }
