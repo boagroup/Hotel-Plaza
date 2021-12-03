@@ -1,3 +1,4 @@
+import java.util.Date;
 /**
  * UI
  */
@@ -202,6 +203,7 @@ public class UI {
         System.out.println("\n");
     }
 
+
     /**
      * Returns a String containing a message with the current user's username and permission level.
      *
@@ -220,6 +222,7 @@ public class UI {
         }
     }
 
+
     /**
      * Prints out a simple logo
      *
@@ -229,5 +232,47 @@ public class UI {
         System.out.println("\n||||||||||||||||||||||||||||||||||||||||||||||||||");
         System.out.println("                   " + menuName);
         System.out.println("||||||||||||||||||||||||||||||||||||||||||||||||||\n");
+    }
+
+
+    /**
+     * Prints out a proof of concept receipt intended for the final stages of a booking
+     * Might need some work
+     * @param guestName Parameters might need to be adjusted to work with "Database" and "Item"
+     * @param price Parameters might need to be adjusted to work with "Database" and "Item"
+     * @param roomNum Parameters might need to be adjusted to work with "Database" and "Item"
+     */
+    static void printReceipt(String guestName, double price, int roomNum) {
+        clearScreen();
+        System.out.println(
+                "<=============================================================>" +
+                "\n<=============================================================>");
+        wait(750);
+        System.out.println(
+                "                                     __            __     \n" +
+                "                                    /  |          /  |    \n" +
+                "  ______   ______   _______  ______ $$/  ______  _$$ |_   \n" +
+                " /      \\ /      \\ /       |/      \\/  |/      \\/ $$   |  \n" +
+                "/$$$$$$  /$$$$$$  /$$$$$$$//$$$$$$  $$ /$$$$$$  $$$$$$/   \n" +
+                "$$ |  $$/$$    $$ $$ |     $$    $$ $$ $$ |  $$ | $$ | __ \n" +
+                "$$ |     $$$$$$$$/$$ \\_____$$$$$$$$/$$ $$ |__$$ | $$ |/  |\n" +
+                "$$ |     $$       $$       $$       $$ $$    $$/  $$  $$/ \n" +
+                "$$/       $$$$$$$/ $$$$$$$/ $$$$$$$/$$/$$$$$$$/    $$$$/  \n" +
+                "                                       $$ |               \n" +
+                "                                       $$ |               \n" +
+                "                                       $$/                ");
+        System.out.println("\t\tPRICE: " + price + " DKK");
+        wait(750);
+        System.out.println("\n\t\tGUEST: " + guestName);
+        wait(750);
+        System.out.println("\n\t\tROOM NUMBER: " + roomNum);
+        wait(750);
+        Date date = new Date();
+        System.out.println("\n\t\tBOUGHT ON: " + date);
+        System.out.println("\n\n");
+        System.out.println(
+                "<=============================================================>" +
+                "\n<=============================================================>");
+        wait(10000);
     }
 }
