@@ -1,11 +1,19 @@
 /**
- * UI
+ * UI class that handles the graphical aspect of the application
  */
-public class UI {
+public final class UI {
+
+    /**
+     * private constructor that disallows creating an instance of the UI class
+     * @throws RuntimeException when called
+     */
+    private UI() throws RuntimeException {
+        throw new RuntimeException("Instantiation of UI class is not allowed");
+    }
 
     /* Attributes to store String elements for repeatability purposes */
-    static String logo =
-            "\n" +
+    private final static String logo =
+                    "\n" +
                     "██╗░░██╗░█████╗░████████╗███████╗██╗░░░░░  ██████╗░██╗░░░░░░█████╗░███████╗░█████╗░\n" +
                     "██║░░██║██╔══██╗╚══██╔══╝██╔════╝██║░░░░░  ██╔══██╗██║░░░░░██╔══██╗╚════██║██╔══██╗\n" +
                     "███████║██║░░██║░░░██║░░░█████╗░░██║░░░░░  ██████╔╝██║░░░░░███████║░░███╔═╝███████║\n" +
@@ -13,17 +21,16 @@ public class UI {
                     "██║░░██║╚█████╔╝░░░██║░░░███████╗███████╗  ██║░░░░░███████╗██║░░██║███████╗██║░░██║\n" +
                     "╚═╝░░╚═╝░╚════╝░░░░╚═╝░░░╚══════╝╚══════╝  ╚═╝░░░░░╚══════╝╚═╝░░╚═╝╚══════╝╚═╝░░╚═╝\n" +
                     "\n";
-    static String title = "Hotel Plaza Management System\n";
-    static String credits = "Created by Boagroup\n";
-    static String inputQuestion = "\nWhat do you wish to do?\n";
-
+    private final static String title =         "Hotel Plaza Management System\n";
+    private final static String credits =       "Created by Boagroup\n";
+    private final static String inputQuestion = "\nWhat do you wish to do?\n";
 
     /**
      * Platform-independent function that clears the screen on the Java console.
      * <p>
      * Works by printing a large amount of characters that are removed by a plugin.
      */
-    static void clearScreen() {
+    public static void clearScreen() {
         try {
             System.out.print("clear");
             if (!System.getProperty("java.class.path").contains("idea_rt.jar")) {
@@ -40,20 +47,18 @@ public class UI {
         }
     }
 
-
     /**
      * Clears the screen, then prints out the logo attribute containing ASCII art.
      */
-    static void printLogo() {
+    public static void printLogo() {
         clearScreen();
         System.out.println(logo);
     }
 
-
     /**
      * Adds delay and prints logo for aesthetics, then prints out the options available in the "login" screen.
      */
-    static void printLoginMenu() {
+    public static void printLoginMenu() {
         sleep();
         printLogo();
         String menu = "Welcome to the " + title +
@@ -65,11 +70,10 @@ public class UI {
         System.out.println(menu);
     }
 
-
     /**
      * Adds delay and prints logo for aesthetics, then prints out the options available in the "Main Menu" screen.
      */
-    static void printMainMenu() {
+    public static void printMainMenu() {
         sleep();
         printLogo();
         String menu = title +
@@ -84,11 +88,10 @@ public class UI {
         System.out.println(menu);
     }
 
-
     /**
      * Adds delay and prints logo for aesthetics, then prints out the options available in the "Bookings Menu" section.
      */
-    static void printBookingsMenu() {
+    public static void printBookingsMenu() {
         sleep();
         printLogo();
         String menu = title +
@@ -102,11 +105,10 @@ public class UI {
         System.out.println(menu);
     }
 
-
     /**
      * Adds delay and prints logo for aesthetics, then prints out the options available in the "Rooms Menu" section.
      */
-    static void printRoomsMenu() {
+    public static void printRoomsMenu() {
         sleep();
         printLogo();
         String menu = title +
@@ -120,11 +122,10 @@ public class UI {
         System.out.println(menu);
     }
 
-
     /**
      * Adds delay and prints logo for aesthetics, then prints out the options available in the "Staff Menu" section.
      */
-    static void printStaffMenu() {
+    public static void printStaffMenu() {
         sleep();
         printLogo();
         String menu = title +
@@ -139,11 +140,10 @@ public class UI {
         System.out.println(menu);
     }
 
-
     /**
      * Adds delay and prints logo for aesthetics, then prints out the options available in the "Finance Menu" section.
      */
-    static void printFinanceMenu() {
+    public static void printFinanceMenu() {
         sleep();
         printLogo();
         String menu = title +
@@ -156,11 +156,10 @@ public class UI {
         System.out.println(menu);
     }
 
-
     /**
      * Adds one second of delay for aesthetic purposes
      */
-    static void sleep() {
+    public static void sleep() {
         try {
             Thread.sleep(1000);
         } catch (InterruptedException ex) {
@@ -168,13 +167,12 @@ public class UI {
         }
     }
 
-
     /**
-     * Adds a custom amount of delay for aesthetic purposes
-     *
-     * @param ms Amount of delay in milliseconds
+     * Adds one second of delay for aesthetic purposes
+     * @param ms amount of delay in milliseconds
+     * @throws IllegalArgumentException if {@code ms} is negative
      */
-    static void wait(int ms) {
+    public static void sleep(int ms) {
         try {
             Thread.sleep(ms);
         } catch (InterruptedException ex) {
@@ -182,24 +180,35 @@ public class UI {
         }
     }
 
-
     /**
      * Simulates a loading bar filling up using symbols and delay functions.
      */
-    static void loadingScreen() {
-        System.out.println("\n");
-        System.out.print("||");
-        wait(300);
-        System.out.print("====================");
-        wait(300);
-        System.out.print("====================");
-        wait(300);
-        System.out.print("====================");
-        wait(300);
-        System.out.print("====================");
-        wait(300);
-        System.out.print("||");
-        System.out.println("\n");
+    public static void loadingScreen() {
+        System.out.print("\n\n||");
+        for (int i = 0; i < 4; i++) {
+            sleep(300);
+            System.out.print("====================");
+        }
+        sleep(300);
+        System.out.print("||\n\n");
+    }
+
+    /**
+     * Simulates a loading bar filling up using symbols and delay functions.
+     * @param length - length of the loading bar
+     * @throws IllegalArgumentException if {@code length} is negative
+     */
+    public static void loadingScreen(int length) throws IllegalArgumentException{
+        if (length < 0) {
+            throw new IllegalArgumentException("value is negative");
+        }
+        System.out.print("\n\n||");
+        for (int i = 0; i < length; i++) {
+            sleep(300);
+            System.out.print("====================");
+        }
+        sleep(300);
+        System.out.print("||\n\n");
     }
 
     /**
@@ -209,25 +218,12 @@ public class UI {
      *
      * Will not crash if misplaced. Has to be a function instead of a variable otherwise the program won't compile
      */
-    static String returnCurrentUser() {
+    public static String returnCurrentUser() {
         try {
-            String s = "\nYou are currently logged in as user " + "\"" + Authentication.getLoggedInUser().getUsername() + "\"" + " with permission level " + Authentication.getLoggedInUser().getPermission() + "\n";
-            return s;
+            return "\nYou are currently logged in as user " + "\"" + Authentication.getLoggedInUser().getUsername() + "\"" + " with permission level " + Authentication.getLoggedInUser().getPermission() + "\n";
         }
        catch (Exception e) {
-            String error;
-            return  error = "\nUser not logged in yet";
+            return "\nUser not logged in yet";
         }
-    }
-
-    /**
-     * Prints out a simple logo
-     *
-     * @param menuName Custom String value to create a simple logo for each menu
-     */
-    static void menuLogo(String menuName) { //To be deleted soon if of no use
-        System.out.println("\n||||||||||||||||||||||||||||||||||||||||||||||||||");
-        System.out.println("                   " + menuName);
-        System.out.println("||||||||||||||||||||||||||||||||||||||||||||||||||\n");
     }
 }
