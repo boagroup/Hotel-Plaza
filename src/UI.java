@@ -1,5 +1,5 @@
 import DatabasePackage.Database;
-import ItemsPackage.Booking;
+import ItemsPackage.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -296,7 +296,7 @@ public final class UI {
                     "                                                                                                                                                    \n" +
                     "\n\n\n");
 
-            /* Assign the serialized ArrayList Booking objects to auxiliary "booking" ArrayList */
+            /* Assign the serialized ArrayList "Booking" objects to auxiliary "booking" ArrayList */
             ArrayList<Booking> bookings = Database.getList(Booking.class);
 
             /* Iterate through all Booking objects inside "bookings" and get the relevant attributes */
@@ -307,7 +307,7 @@ public final class UI {
                         "\t\t\t\t\t\t\t\t\t|| GUEST: " + booking.getGuest().getName() + "\n" +
                         "\t\t\t\t\t\t\t\t\t|| CHECK-IN:  " + booking.getCheckInDate() + "\n" +
                         "\t\t\t\t\t\t\t\t\t|| CHECK-OUT: " + booking.getCheckOutDate() + "\n" +
-                        "\t\t\t\t\t\t\t\t\t|| PRICE: " + booking.getCost() + "\n" +
+                        "\t\t\t\t\t\t\t\t\t|| PRICE: " + booking.getCost() + " DKK\n" +
                         "\t\t\t\t\t\t\t\t\t|| HAS PAID: "+ booking.getGuest().isHasPaid() + "\n" +
                         "\t\t\t\t\t\t\t\t\t====================================================================" +
                         "\n\n\n");
@@ -317,5 +317,51 @@ public final class UI {
             System.out.println("\n\n\n\n\n\nInsert anything to go back");
             Scanner wait = new Scanner(System.in);
             wait.nextLine();
+    }
+
+    /**
+     * Prints out a report containing information on room availability
+     *
+     * Takes serialized ArrayList of "Room" from Database, attributes it to an auxiliary ArrayList,
+     * and iterates through the latter, printing out relevant information for the report
+     *
+     * Might need some work
+     */
+    public static void displayAvailabilityReport() {
+        /* Refresh the console and print the logo */
+        clearScreen();
+        System.out.println("\n" +
+                "\n" +
+                "______ _____  ________  ___   ___  _   _  ___  _____ _       ___  ______ _____ _     _____ _______   __ ______ ___________ ___________ _____ \n" +
+                "| ___ \\  _  ||  _  |  \\/  |  / _ \\| | | |/ _ \\|_   _| |     / _ \\ | ___ \\_   _| |   |_   _|_   _\\ \\ / / | ___ \\  ___| ___ \\  _  | ___ \\_   _|\n" +
+                "| |_/ / | | || | | | .  . | / /_\\ \\ | | / /_\\ \\ | | | |    / /_\\ \\| |_/ / | | | |     | |   | |  \\ V /  | |_/ / |__ | |_/ / | | | |_/ / | |  \n" +
+                "|    /| | | || | | | |\\/| | |  _  | | | |  _  | | | | |    |  _  || ___ \\ | | | |     | |   | |   \\ /   |    /|  __||  __/| | | |    /  | |  \n" +
+                "| |\\ \\\\ \\_/ /\\ \\_/ / |  | | | | | \\ \\_/ / | | |_| |_| |____| | | || |_/ /_| |_| |_____| |_  | |   | |   | |\\ \\| |___| |   \\ \\_/ / |\\ \\  | |  \n" +
+                "\\_| \\_|\\___/  \\___/\\_|  |_/ \\_| |_/\\___/\\_| |_/\\___/\\_____/\\_| |_/\\____/ \\___/\\_____/\\___/  \\_/   \\_/   \\_| \\_\\____/\\_|    \\___/\\_| \\_| \\_/  \n" +
+                "                                                                                                                                             \n" +
+                "                                                                                                                                             \n" +
+                "\n\n\n");
+
+        /* Assign the serialized ArrayList "Room" objects to auxiliary "rooms" ArrayList */
+        ArrayList<Room> rooms = Database.getList(Room.class);
+
+        /* Iterate through all Room objects inside "rooms" and get the relevant attributes */
+        for (Room room : rooms) {
+            System.out.println(
+                            "\t\t\t\t\t\t\t\t\t====================================================================\n" +
+                            "\t\t\t\t\t\t\t\t\t|| ROOM NUMBER: " + room.getNumber() + "\n" +
+                            "\t\t\t\t\t\t\t\t\t|| TYPE: " + room.getType() + "\n" +
+                            "\t\t\t\t\t\t\t\t\t|| IS OCCUPIED:  " + room.isOccupied() + "\n" +
+                            "\t\t\t\t\t\t\t\t\t|| IS CLEAN: " + room.isClean() + "\n" +
+                            "\t\t\t\t\t\t\t\t\t|| IS OUT OF ORDER: " + room.isOutOfOrder() + "\n" +
+                            "\t\t\t\t\t\t\t\t\t|| STANDARD PRICE: "+ room.getStandardPrice() + " DKK\n" +
+                            "\t\t\t\t\t\t\t\t\t====================================================================" +
+                            "\n\n\n");
+        }
+
+        /* Use any user input to close the report */
+        System.out.println("\n\n\n\n\n\nInsert anything to go back");
+        Scanner wait = new Scanner(System.in);
+        wait.nextLine();
     }
 }

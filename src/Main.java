@@ -158,6 +158,7 @@ public final class Main implements Serializable {
                     listAll(Room.class, sc);
                     break;
                 case "3": // Display Room Availability
+                    UI.displayAvailabilityReport();
                     break;
                 case "4": // Go back
                     return;
