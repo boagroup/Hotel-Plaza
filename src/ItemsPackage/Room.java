@@ -1,5 +1,8 @@
 package ItemsPackage;
 
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
 public class Room extends Item {
 	protected int number;
 	protected String type;
@@ -61,6 +64,65 @@ public class Room extends Item {
 				'}';
 	}
 
+	public boolean edit(Scanner sc) {
+		System.out.println("Room Number: " + number);
+		System.out.println("1. Room Type: " + type);
+		System.out.println("2. Occupied: " + isOccupied);
+		System.out.println("3. Price: " + standardPrice);
+		System.out.println("4. Number of beds: " + number);
+		System.out.println("5. Clean: " + isClean);
+		System.out.println("6. Out of order: " + isOutOfOrder);
+		String answer = sc.nextLine();
+		switch (answer) {
+			case "1":
+				System.out.println("Please enter the Room Type: ");
+				type = sc.nextLine();
+				break;
+			case "2":
+				System.out.println("Change the Occupy status? (True or False): ");
+				try {
+					isOccupied = sc.nextBoolean();
+				} catch (Exception e) {
+					System.out.println(e instanceof InputMismatchException? "You need to put in True or False!" : e.getMessage());
+				}
+				break;
+			case "3":
+				System.out.println("Please enter the new Price: ");
+				try {
+					standardPrice = sc.nextInt();
+				} catch (Exception e) {
+					System.out.println(e instanceof InputMismatchException? "You need to put in an integer!" : e.getMessage());
+				}
+				break;
+			case "4":
+				System.out.println("Please enter the Number of beds: ");
+				try {
+					number = sc.nextInt();
+				} catch (Exception e) {
+					System.out.println(e instanceof InputMismatchException? "You need to put in an integer!" : e.getMessage());
+				}
+				break;
+			case "5":
+				System.out.println("Change the Clean status? (True or False): ");
+				try {
+					isClean = sc.nextBoolean();
+				} catch (Exception e) {
+					System.out.println(e instanceof InputMismatchException? "You need to put in True or False!" : e.getMessage());
+				}
+				break;
+			case "6":
+				System.out.println("Change the Out of Order status? (True or False): ");
+				try {
+					isOutOfOrder = sc.nextBoolean();
+				} catch (Exception e) {
+					System.out.println(e instanceof InputMismatchException? "You need to put in True or False!" : e.getMessage());
+				}
+				break;
+			default:
+				return false;
+		}
+		return true;
+	}
 
 	//* Getters
 
