@@ -67,15 +67,34 @@ public final class Database implements Serializable {
 	 * Returns the ArrayList of the specified Class or null if there is no list for the Class.
 	 * @throws NullPointerException if the type is {@code null}
 	 */
-	public static <T> ArrayList<T> getList(Class<T> type) {
+	public static <T> ArrayList<T> getList(Class<T> type) throws NullPointerException {
+		if (type == null) {
+			throw new NullPointerException("Type is null");
+		}
 		return db.getArrayList(type);
+	}
+
+	/**
+	 * Associates the specified ArrayList with the specified Class in this map.
+	 * If the map previously contained a mapping for the Class, the old
+	 * ArrayList is replaced.
+	 *
+	 * @param type Class with which the specified ArrayLIst is to be associated
+	 * @param list ArrayList to be associated with the specified Class
+	 * @throws NullPointerException if the type is null
+	 */
+	public static <T> void putList(Class<T> type, ArrayList<T> list) throws NullPointerException {
+		if (type == null) {
+			throw new NullPointerException("Type is null");
+		}
+		db.putArrayList(type, list);
 	}
 
 	/**
 	 * Returns <tt>true</tt> if Database contains an ArrayList for the
 	 * specified Class.
 	 *
-	 * @param   type   The Class whose presence in Database is to be tested
+	 * @param type The Class whose presence in Database is to be tested
 	 * @return <tt>true</tt> if this Database contains a mapping for the specified Class.
 	 * @throws NullPointerException if the type is null
 	 */
