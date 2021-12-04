@@ -3,6 +3,7 @@ package ItemsPackage;
 public class Room extends Item {
 	protected int number;
 	protected String type;
+	protected boolean isOccupied = false;
 	protected double standardPrice;
 	protected int numberOfBeds;
 	protected boolean isClean = true;
@@ -13,16 +14,17 @@ public class Room extends Item {
 		generateTags();
 	}
 
-	public Room(int number, boolean isClean, boolean isOutOfOrder) {
+	public Room(int number, boolean isClean, boolean isOccupied) {
 		this.number = number;
 		this.isClean = isClean;
-		this.isOutOfOrder = isOutOfOrder;
+		this.isOccupied = isOccupied;
 		generateTags();
 	}
 
-	public Room(int number, String type, double standardPrice, int numberOfBeds, boolean isClean, boolean isOutOfOrder) {
+	public Room(int number, String type, boolean isOccupied, double standardPrice, int numberOfBeds, boolean isClean, boolean isOutOfOrder) {
 		this.number = number;
 		this.type = type;
+		this.isOccupied = isOccupied;
 		this.standardPrice = standardPrice;
 		this.numberOfBeds = numberOfBeds;
 		this.isClean = isClean;
@@ -38,6 +40,7 @@ public class Room extends Item {
 		this.tag =
 			number + " "
 			+ type + " "
+			+ isOccupied + " "
 			+ standardPrice + " "
 			+ numberOfBeds + " "
 	        + isClean + " "
@@ -50,12 +53,14 @@ public class Room extends Item {
 		return "Room{" +
 				"number=" + number +
 				", type='" + type + '\'' +
+				", isOccupied=" + isOccupied +
 				", standardPrice=" + standardPrice +
 				", numberOfBeds=" + numberOfBeds +
 				", isClean=" + isClean +
 				", isOutOfOrder=" + isOutOfOrder +
 				'}';
 	}
+
 
 	//* Getters
 
@@ -65,6 +70,10 @@ public class Room extends Item {
 
 	public String getType() {
 		return type;
+	}
+
+	public boolean isOccupied() {
+		return isOccupied;
 	}
 
 	public double getStandardPrice() {
@@ -93,6 +102,10 @@ public class Room extends Item {
 	public void setType(String type) {
 		this.type = type;
 		generateTags();
+	}
+
+	public void setOccupied(boolean occupied) {
+		isOccupied = occupied;
 	}
 
 	public void setStandardPrice(double standardPrice) {
