@@ -11,8 +11,14 @@ import java.util.Scanner;
 public final class Main implements Serializable {
 
     static boolean isLoggedIn = false;
+    // testing
+//    static ArrayList<Room> list = new ArrayList<>();
 
     public static void main(String[] args) {
+        // testing
+//        list.add(new Room(1));
+//        list.add(new Room(2));
+//        list.add(new Room(3));
         Scanner sc = new Scanner(System.in);
         while (true) {
             if (!isLoggedIn) {
@@ -191,7 +197,8 @@ public final class Main implements Serializable {
             UI.printLogo();
             System.out.println("Something went horribly wrong!");
         }
-        ArrayList<?> list = Database.getList(type);
+        ArrayList<T> list = Database.getList(type);
+
         if (list == null || list.isEmpty()) {
             UI.printLogo();
             System.out.println("List is empty!");
@@ -205,7 +212,7 @@ public final class Main implements Serializable {
                     System.out.println(elem.toString());
                 }
                 try {
-                    seeDetails((Item)list.get(sc.nextInt()));
+                    seeDetails(list.get(sc.nextInt()-1), list, sc);
                     return;
                 } catch (Exception e) {
                     if (e instanceof InputMismatchException) {
@@ -222,10 +229,31 @@ public final class Main implements Serializable {
         }
     }
 
-    public static void seeDetails(Item obj) {
-        UI.printLogo();
-        System.out.println(obj.toString());
-        System.out.println("EPIC");
+    public static <T extends Item> void seeDetails(T obj, ArrayList<T> list, Scanner sc) {
+        String answer;
+        DetailsLoop:
+        while (true) {
+            UI.printLogo();
+            System.out.println(obj.toString());
+            System.out.println("1. Edit\n" +
+                    "2. Remove\n" +
+                    "3. Go back\n" +
+                    "\nWhat do you wish to do?\n");
+            answer = sc.nextLine();
+            switch (answer) {
+                case "1": // Edit
+//                    obj.edit();
+                    break DetailsLoop;
+                case "2": // Remove
+                    list.remove(obj);
+                    UI.printLogo();
+                    System.out.println("Removed successfully");
+                    break DetailsLoop;
+                case "3": // Go back
+                    return;
+            }
+//            Database.saveDatabase();
+        }
     }
 
 }
