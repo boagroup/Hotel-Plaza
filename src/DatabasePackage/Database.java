@@ -17,6 +17,16 @@ public final class Database implements Serializable {
 		throw new RuntimeException("Instantiation of Database is not allowed");
 	}
 
+	public static boolean fileExists() {
+		File folder = new File(DIR);
+		File file = new File(DIR + File.separator + "db.ser");
+		if (!folder.exists() || !folder.isDirectory()) { // checks if folder exists and is directory
+			return false;
+		}
+		return file.exists() && !file.isDirectory();
+
+	}
+
 	/**
 	 * function handling serializing the database into single file
 	 * @return <tt>true</tt> if serialization went successful, <tt>false</tt> otherwise
@@ -33,8 +43,8 @@ public final class Database implements Serializable {
 			out.close();
 			fos.close();
 		} catch (Exception e) {
-//			System.out.println();
-//			System.out.println(e instanceof FileNotFoundException ? "File not found" : e.getMessage());
+			System.out.println();
+			System.out.println(e instanceof FileNotFoundException ? "File not found" : e.getMessage());
 			return false;
 		}
 		return true;
@@ -56,8 +66,8 @@ public final class Database implements Serializable {
 			in.close();
 			fis.close();
 		} catch (Exception e) {
-//			System.out.println();
-//			System.out.println(e instanceof FileNotFoundException ? "File not found" : e.getMessage());
+			System.out.println();
+			System.out.println(e instanceof FileNotFoundException ? "File not found" : e.getMessage());
 			return false;
 		}
 		return true;
@@ -76,18 +86,18 @@ public final class Database implements Serializable {
 
 	/**
 	 * Associates the specified ArrayList with the specified Class in this map.
-	 * If the map previously contained a mapping for the Class, the old
-	 * ArrayList is replaced.
-	 *
 	 * @param type Class with which the specified ArrayLIst is to be associated
-	 * @param list ArrayList to be associated with the specified Class
 	 * @throws NullPointerException if the type is null
 	 */
-	public static <T> void putList(Class<T> type, ArrayList<T> list) throws NullPointerException {
+	public static <T> boolean putList(Class<T> type) throws NullPointerException {
 		if (type == null) {
 			throw new NullPointerException("Type is null");
 		}
-		db.putArrayList(type, list);
+		if (!db.containsClass(type)) {
+			db.putArrayList(type, new ArrayList<>());
+			return true;
+		}
+		return false;
 	}
 
 	/**
