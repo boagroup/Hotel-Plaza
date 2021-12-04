@@ -79,7 +79,7 @@ public final class Database implements Serializable {
 	 * @return <tt>true</tt> if this Database contains a mapping for the specified Class.
 	 * @throws NullPointerException if the type is null
 	 */
-	public <T> boolean containsList(Class<T> type) throws NullPointerException {
+	public static <T> boolean containsList(Class<T> type) throws NullPointerException {
 		if (type == null) {
 			throw new NullPointerException("Type is null");
 		}
