@@ -33,8 +33,8 @@ public final class Database implements Serializable {
 			out.close();
 			fos.close();
 		} catch (Exception e) {
-			System.out.println();
-			System.out.println(e instanceof FileNotFoundException ? "File not found" : e.getMessage());
+//			System.out.println();
+//			System.out.println(e instanceof FileNotFoundException ? "File not found" : e.getMessage());
 			return false;
 		}
 		return true;
@@ -56,8 +56,8 @@ public final class Database implements Serializable {
 			in.close();
 			fis.close();
 		} catch (Exception e) {
-			System.out.println();
-			System.out.println(e instanceof FileNotFoundException ? "File not found" : e.getMessage());
+//			System.out.println();
+//			System.out.println(e instanceof FileNotFoundException ? "File not found" : e.getMessage());
 			return false;
 		}
 		return true;
@@ -70,4 +70,20 @@ public final class Database implements Serializable {
 	public static <T> ArrayList<T> getList(Class<T> type) {
 		return db.getArrayList(type);
 	}
+
+	/**
+	 * Returns <tt>true</tt> if Database contains an ArrayList for the
+	 * specified Class.
+	 *
+	 * @param   type   The Class whose presence in Database is to be tested
+	 * @return <tt>true</tt> if this Database contains a mapping for the specified Class.
+	 * @throws NullPointerException if the type is null
+	 */
+	public <T> boolean containsList(Class<T> type) throws NullPointerException {
+		if (type == null) {
+			throw new NullPointerException("Type is null");
+		}
+		return db.containsClass(type);
+	}
+
 }
