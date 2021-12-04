@@ -26,6 +26,10 @@ public final class Main implements Serializable {
         Database.putList(Guest.class);
         Database.putList(Staff.class);
         Database.putList(Booking.class);
+//        ArrayList<Room> list = Database.getList(Room.class);
+//        list.add(new Room(101));
+//        list.add(new Room(201));
+//        list.add(new Room(333));
         Database.saveDatabase();
 
         Scanner sc = new Scanner(System.in);
@@ -207,7 +211,6 @@ public final class Main implements Serializable {
             System.out.println("Something went horribly wrong!");
         }
         ArrayList<T> list = Database.getList(type);
-
         if (list == null || list.isEmpty()) {
             UI.printLogo();
             System.out.println("List is empty!");
@@ -246,7 +249,7 @@ public final class Main implements Serializable {
             System.out.println(obj.toString());
             System.out.println("1. Edit\n" +
                     "2. Remove\n" +
-                    "3. Exit to Main Menu\n" +
+                    "3. Go back to Menu\n" +
                     "\nWhat do you wish to do?\n");
             answer = sc.nextLine();
             switch (answer) {
@@ -256,9 +259,13 @@ public final class Main implements Serializable {
                 case "2": // Remove
                     list.remove(obj);
                     UI.printLogo();
-                    System.out.println("Removed successfully");
+                    if (Database.saveDatabase()) {
+                        System.out.println("Removed successfully");
+                    } else {
+                        System.out.println("Something went horribly wrong!");
+                    }
                     break DetailsLoop;
-                case "3": // Go back
+                default: // Go back
                     return;
             }
 //            Database.saveDatabase();
