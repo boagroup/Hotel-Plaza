@@ -1,8 +1,14 @@
+import DatabasePackage.Database;
+import ItemsPackage.*;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 /**
  * Main
  */
-public final class Main {
+public final class Main implements Serializable {
 
     static boolean isLoggedIn = false;
 
@@ -95,12 +101,52 @@ public final class Main {
             }
         }
     }
+
     public static void BookingsMenu(Scanner sc) {
         String answer;
+        while (true) {
+            UI.printBookingsMenu();
+            answer = sc.nextLine();
+            switch (answer) {
+                case "1": // Add Booking
+                    break;
+                case "2": // Manage Bookings
+                    listAll(Booking.class, sc);
+                    break;
+                case "3": // Display In-house Report
+                    break;
+                case "4": // Go back
+                    return;
+                default:
+                    System.out.println("\nInvalid option");
+                    UI.sleep(150);
+                    break;
+            }
+        }
     }
 
     public static void RoomsMenu(Scanner sc) {
         String answer;
+        ArrayList<Room> list = Database.getList(Room.class);
+        while (true) {
+            UI.printRoomsMenu();
+            answer = sc.nextLine();
+            switch (answer) {
+                case "1": // Add Room
+                    break;
+                case "2": // Manage Rooms
+                    listAll(Room.class, sc);
+                    break;
+                case "3": // Display Room Availability
+                    break;
+                case "4": // Go back
+                    return;
+                default:
+                    System.out.println("\nInvalid option");
+                    UI.sleep(150);
+                    break;
+            }
+        }
     }
 
     public static void StaffMenu(Scanner sc) {
@@ -114,7 +160,7 @@ public final class Main {
                     break;
 
                 case "2": // Manage Staff
-                    System.out.println("Nope");
+                    listAll(Staff.class, sc);
                     break;
 
                 case "3": // List Users
@@ -139,4 +185,47 @@ public final class Main {
     public static void FinanceMenu(Scanner sc) {
         String answer;
     }
+
+    public static <T extends Item> void listAll(Class<T> type, Scanner sc) {
+            if (!Database.loadDatabase()) {
+                UI.printLogo();
+                System.out.println("Something went horribly wrong!");
+            }
+            ArrayList<?> list = Database.getList(type);
+            if (list == null || list.isEmpty()) {
+                UI.printLogo();
+                System.out.println("List is empty!");
+            } else {
+                Integer counter;
+                while (true) {
+                    UI.printLogo();
+                    counter = 1;
+                    for (Object elem: list ) {
+                        System.out.print(counter++ + ". ");
+                        System.out.println(elem.toString());
+                    }
+                    try {
+                        seeDetails((Item)list.get(sc.nextInt()));
+                        return;
+                    } catch (Exception e) {
+                        if (e instanceof InputMismatchException) {
+                            System.out.println("You need to enter an integer!");
+                        }
+                        else if (e instanceof IndexOutOfBoundsException) {
+                            System.out.println("The number you put is too high!");
+                        }
+                        else {
+                            System.out.println(e.getMessage());
+                        }
+                    }
+                }
+        }
+    }
+
+    public static void seeDetails(Item obj) {
+        UI.printLogo();
+        System.out.println(obj.toString());
+        System.out.println("EPIC");
+    }
+
 }
