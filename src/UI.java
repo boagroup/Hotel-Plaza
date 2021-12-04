@@ -1,4 +1,10 @@
+import DatabasePackage.Database;
+import ItemsPackage.Booking;
+
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Scanner;
+
 /**
  * UI class that handles the graphical aspect of the application
  */
@@ -266,5 +272,50 @@ public final class UI {
                 "<=============================================================>" +
                 "\n<=============================================================>");
         sleep(10000);
+    }
+
+    /**
+     * Prints out a report containing information on all bookings
+     *
+     * Takes serialized ArrayList of "Booking" from Database, attributes it to an auxiliary ArrayList,
+     * and iterates through the latter, printing out relevant information for the report
+     *
+     * Might need some work
+     */
+    public static void displayInHouseReport() {
+            /* Refresh the console and print the logo */
+            clearScreen();
+            System.out.println("\n" +
+                    "\n" +
+                    " __  .__   __.         __    __    ______    __    __       _______. _______    .______       _______ .______     ______   .______     .___________.\n" +
+                    "|  | |  \\ |  |        |  |  |  |  /  __  \\  |  |  |  |     /       ||   ____|   |   _  \\     |   ____||   _  \\   /  __  \\  |   _  \\    |           |\n" +
+                    "|  | |   \\|  |  ______|  |__|  | |  |  |  | |  |  |  |    |   (----`|  |__      |  |_)  |    |  |__   |  |_)  | |  |  |  | |  |_)  |   `---|  |----`\n" +
+                    "|  | |  . `  | |______|   __   | |  |  |  | |  |  |  |     \\   \\    |   __|     |      /     |   __|  |   ___/  |  |  |  | |      /        |  |     \n" +
+                    "|  | |  |\\   |        |  |  |  | |  `--'  | |  `--'  | .----)   |   |  |____    |  |\\  \\----.|  |____ |  |      |  `--'  | |  |\\  \\----.   |  |     \n" +
+                    "|__| |__| \\__|        |__|  |__|  \\______/   \\______/  |_______/    |_______|   | _| `._____||_______|| _|       \\______/  | _| `._____|   |__|     \n" +
+                    "                                                                                                                                                    \n" +
+                    "\n\n\n");
+
+            /* Assign the serialized ArrayList Booking objects to auxiliary "booking" ArrayList */
+            ArrayList<Booking> bookings = Database.getList(Booking.class);
+
+            /* Iterate through all Booking objects inside "bookings" and get the relevant attributes */
+            for (Booking booking : bookings) {
+                System.out.println(
+                        "\t\t\t\t\t\t\t\t\t====================================================================\n" +
+                        "\t\t\t\t\t\t\t\t\t|| ROOM NUMBER: " + booking.getRoom().getNumber() + "\n" +
+                        "\t\t\t\t\t\t\t\t\t|| GUEST: " + booking.getGuest().getName() + "\n" +
+                        "\t\t\t\t\t\t\t\t\t|| CHECK-IN:  " + booking.getCheckInDate() + "\n" +
+                        "\t\t\t\t\t\t\t\t\t|| CHECK-OUT: " + booking.getCheckOutDate() + "\n" +
+                        "\t\t\t\t\t\t\t\t\t|| PRICE: " + booking.getCost() + "\n" +
+                        "\t\t\t\t\t\t\t\t\t|| HAS PAID: "+ booking.getGuest().isHasPaid() + "\n" +
+                        "\t\t\t\t\t\t\t\t\t====================================================================" +
+                        "\n\n\n");
+            }
+
+            /* Use any user input to close the report */
+            System.out.println("\n\n\n\n\n\nInsert anything to go back");
+            Scanner wait = new Scanner(System.in);
+            wait.nextLine();
     }
 }

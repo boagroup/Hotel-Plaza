@@ -133,6 +133,7 @@ public final class Main implements Serializable {
                     listAll(Booking.class, sc);
                     break;
                 case "3": // Display In-house Report
+                    UI.displayInHouseReport();
                     break;
                 case "4": // Go back
                     return;
