@@ -187,38 +187,38 @@ public final class Main implements Serializable {
     }
 
     public static <T extends Item> void listAll(Class<T> type, Scanner sc) {
-            if (!Database.loadDatabase()) {
+        if (!Database.loadDatabase()) {
+            UI.printLogo();
+            System.out.println("Something went horribly wrong!");
+        }
+        ArrayList<?> list = Database.getList(type);
+        if (list == null || list.isEmpty()) {
+            UI.printLogo();
+            System.out.println("List is empty!");
+        } else {
+            Integer counter;
+            while (true) {
                 UI.printLogo();
-                System.out.println("Something went horribly wrong!");
-            }
-            ArrayList<?> list = Database.getList(type);
-            if (list == null || list.isEmpty()) {
-                UI.printLogo();
-                System.out.println("List is empty!");
-            } else {
-                Integer counter;
-                while (true) {
-                    UI.printLogo();
-                    counter = 1;
-                    for (Object elem: list ) {
-                        System.out.print(counter++ + ". ");
-                        System.out.println(elem.toString());
+                counter = 1;
+                for (Object elem: list ) {
+                    System.out.print(counter++ + ". ");
+                    System.out.println(elem.toString());
+                }
+                try {
+                    seeDetails((Item)list.get(sc.nextInt()));
+                    return;
+                } catch (Exception e) {
+                    if (e instanceof InputMismatchException) {
+                        System.out.println("You need to enter an integer!");
                     }
-                    try {
-                        seeDetails((Item)list.get(sc.nextInt()));
-                        return;
-                    } catch (Exception e) {
-                        if (e instanceof InputMismatchException) {
-                            System.out.println("You need to enter an integer!");
-                        }
-                        else if (e instanceof IndexOutOfBoundsException) {
-                            System.out.println("The number you put is too high!");
-                        }
-                        else {
-                            System.out.println(e.getMessage());
-                        }
+                    else if (e instanceof IndexOutOfBoundsException) {
+                        System.out.println("The number you put is too high!");
+                    }
+                    else {
+                        System.out.println(e.getMessage());
                     }
                 }
+            }
         }
     }
 
