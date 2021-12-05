@@ -56,8 +56,50 @@ public class Staff extends Item implements Serializable {
     }
 
     public boolean edit(Scanner sc) {
+        System.out.println("1. Employee Name: " + name);
+        System.out.println("2. Position: " + position);
+        System.out.println("3. Salary: " + salary + " DKK");
+        System.out.println("4. Gender: " + gender);
+        System.out.println("5. Age: " + age);
+        System.out.println("0. Go back");
+        String answer = sc.nextLine();
+        switch (answer) {
+            case "1":
+                System.out.println("Please enter the employee's name: ");
+                name = sc.nextLine();
+                break;
+            case "2":
+                System.out.println("Please enter the employee's position: ");
+                position = sc.nextLine();
+                break;
+            case "3":
+                System.out.println("Please enter the salary: ");
+                try {
+                    salary = Double.parseDouble(sc.nextLine());
+                } catch (Exception e) {
+                    System.out.println(e instanceof NumberFormatException? "You need to put in a number!" : e.getMessage());
+                }
+                break;
+            case "4":
+                System.out.println("Please enter the gender:");
+                gender = sc.nextLine();
+                break;
+            case "5":
+                System.out.println("Please enter the age: ");
+                try {
+                    age = Integer.parseInt(sc.nextLine());
+                } catch (Exception e) {
+                    System.out.println(e instanceof NumberFormatException? "You need to put in a number!" : e.getMessage());
+                }
+                break;
+            default:
+                generateTags();
+                return false;
+        }
+        generateTags();
         return true;
     }
+
     // Getters
 
     public String getName() {
