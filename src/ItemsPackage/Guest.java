@@ -56,7 +56,7 @@ public class Guest extends Item implements Serializable {
 				'}';
 	}
 
-	public boolean edit() {
+	public boolean edit(Scanner sc) {
 		return true;
 	}
 

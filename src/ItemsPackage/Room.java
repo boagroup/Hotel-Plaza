@@ -65,8 +65,7 @@ public class Room extends Item implements Serializable {
 				'}';
 	}
 
-	public boolean edit() {
-		Scanner sc = new Scanner(System.in);
+	public boolean edit(Scanner sc) {
 		System.out.println("Room Number: " + number);
 		System.out.println("1. Room Type: " + type);
 		System.out.println("2. Occupied: " + isOccupied);
@@ -82,12 +81,7 @@ public class Room extends Item implements Serializable {
 				type = sc.nextLine();
 				break;
 			case "2":
-				System.out.println("Change the Occupy status? (True or False): ");
-				try {
-					isOccupied = sc.nextBoolean();
-				} catch (Exception e) {
-					System.out.println(e instanceof InputMismatchException? "You need to put in True or False!" : e.getMessage());
-				}
+					isOccupied ^= true;
 				break;
 			case "3":
 				System.out.println("Please enter the new Price: ");
@@ -100,32 +94,20 @@ public class Room extends Item implements Serializable {
 			case "4":
 				System.out.println("Please enter the Number of beds: ");
 				try {
-					number = sc.nextInt();
+					numberOfBeds = sc.nextInt();
 				} catch (Exception e) {
 					System.out.println(e instanceof InputMismatchException? "You need to put in an integer!" : e.getMessage());
 				}
 				break;
 			case "5":
-				System.out.println("Change the Clean status? (True or False): ");
-				try {
-					isClean = sc.nextBoolean();
-				} catch (Exception e) {
-					System.out.println(e instanceof InputMismatchException? "You need to put in True or False!" : e.getMessage());
-				}
+				isClean ^= true;
 				break;
 			case "6":
-				System.out.println("Change the Out of Order status? (True or False): ");
-				try {
-					isOutOfOrder = sc.nextBoolean();
-				} catch (Exception e) {
-					System.out.println(e instanceof InputMismatchException? "You need to put in True or False!" : e.getMessage());
-				}
+				isOutOfOrder ^= true;
 				break;
 			default:
-				sc.close();
 				return false;
 		}
-		sc.close();
 		return true;
 	}
 

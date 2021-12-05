@@ -11,8 +11,7 @@ import java.util.Scanner;
 public final class Main implements Serializable {
 
     static boolean isLoggedIn = false;
-    // testing
-//        static ArrayList<Room> list = new ArrayList<>();
+    static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
         // testing
@@ -27,17 +26,15 @@ public final class Main implements Serializable {
         Database.putList(Staff.class);
         Database.putList(Booking.class);
 //        ArrayList<Room> list = Database.getList(Room.class);
-//        list.add(new Room(101));
-//        list.add(new Room(201));
-//        list.add(new Room(333));
+////        list.add(new Room(101));
+////        list.add(new Room(201));
+////        list.add(new Room(333));
         Database.saveDatabase();
-
-        Scanner sc = new Scanner(System.in);
         while (true) {
             if (!isLoggedIn) {
-                loginMenu(sc);
+                loginMenu();
             } else {
-                mainMenu(sc);
+                mainMenu();
             }
         }
     }
@@ -45,7 +42,7 @@ public final class Main implements Serializable {
     /**
      * Enables the user to authenticate or to terminate the program
      */
-    public static void loginMenu(Scanner sc) {
+    public static void loginMenu() {
         String answer;
         while (!isLoggedIn) {
             UI.printLoginMenu();
@@ -89,7 +86,7 @@ public final class Main implements Serializable {
         }
     }
 
-    public static void mainMenu(Scanner sc) {
+    public static void mainMenu() {
         String answer;
         mainLoop:
         while (isLoggedIn) {
@@ -97,16 +94,16 @@ public final class Main implements Serializable {
             answer = sc.nextLine();
             switch (answer) {
                 case "1":
-                    BookingsMenu(sc);
+                    BookingsMenu();
                     break;
                 case "2":
-                    RoomsMenu(sc);
+                    RoomsMenu();
                     break;
                 case "3":
-                    StaffMenu(sc);
+                    StaffMenu();
                     break;
                 case "4":
-                    FinanceMenu(sc);
+                    FinanceMenu();
                     break;
                 case "5":
                     System.out.println("\nLogging out...");
@@ -122,7 +119,7 @@ public final class Main implements Serializable {
         }
     }
 
-    public static void BookingsMenu(Scanner sc) {
+    public static void BookingsMenu() {
         String answer;
         while (true) {
             UI.printBookingsMenu();
@@ -131,7 +128,7 @@ public final class Main implements Serializable {
                 case "1": // Add Booking
                     break;
                 case "2": // Manage Bookings
-                    listAll(Booking.class, sc);
+                    listAll(Booking.class);
                     break;
                 case "3": // Display In-house Report
                     UI.displayInHouseReport();
@@ -146,9 +143,8 @@ public final class Main implements Serializable {
         }
     }
 
-    public static void RoomsMenu(Scanner sc) {
+    public static void RoomsMenu() {
         String answer;
-        ArrayList<Room> list = Database.getList(Room.class);
         while (true) {
             UI.printRoomsMenu();
             answer = sc.nextLine();
@@ -156,7 +152,7 @@ public final class Main implements Serializable {
                 case "1": // Add Room
                     break;
                 case "2": // Manage Rooms
-                    listAll(Room.class, sc);
+                    listAll(Room.class);
                     break;
                 case "3": // Display Room Availability
                     UI.displayAvailabilityReport();
@@ -171,7 +167,7 @@ public final class Main implements Serializable {
         }
     }
 
-    public static void StaffMenu(Scanner sc) {
+    public static void StaffMenu() {
         String answer;
         while (true) {
             UI.printStaffMenu();
@@ -182,7 +178,7 @@ public final class Main implements Serializable {
                     break;
 
                 case "2": // Manage Staff
-                    listAll(Staff.class, sc);
+                    listAll(Staff.class);
                     break;
 
                 case "3": // List Users
@@ -204,11 +200,11 @@ public final class Main implements Serializable {
         }
     }
 
-    public static void FinanceMenu(Scanner sc) {
+    public static void FinanceMenu() {
         String answer;
     }
 
-    public static <T extends Item> void listAll(Class<T> type, Scanner sc) {
+    public static <T extends Item> void listAll(Class<T> type) {
         if (!Database.loadDatabase()) {
             UI.printLogo();
             System.out.println("Something went horribly wrong!");
@@ -232,9 +228,9 @@ public final class Main implements Serializable {
                     if (counter < 1) {
                         return;
                     }
-                    seeDetails(list.get(counter-1), list, sc);
-                    return;
+                    seeDetails(list.get(counter-1), list);
                 } catch (Exception e) {
+                    UI.printLogo();
                     if (e instanceof InputMismatchException) {
                         System.out.println("You need to enter an integer!");
                     }
@@ -244,29 +240,34 @@ public final class Main implements Serializable {
                     else {
                         System.out.println(e.getMessage());
                     }
+                    UI.sleep(1000);
                 }
             }
         }
     }
 
-    public static <T extends Item> void seeDetails(T obj, ArrayList<T> list, Scanner sc) {
+    public static <T extends Item> void seeDetails(T obj, ArrayList<T> list) {
         String answer;
-        Scanner sca = new Scanner(System.in); // bug workaround
         DetailsLoop:
         while (true) {
             UI.printLogo();
             System.out.println(obj.toString());
             System.out.println("1. Edit\n" +
                     "2. Remove\n" +
-                    "3. Go back to Menu\n" +
+                    "3. Go back\n" +
                     "\nWhat do you wish to do?\n");
-
-            answer = sca.nextLine();
+            answer = sc.nextLine();
             switch (answer) {
                 case "1": // Edit
                     UI.printLogo();
-                    while(obj.edit()) {
+                    while(obj.edit(sc)) {
                         UI.printLogo();
+                    }
+                    UI.printLogo();
+                    if (Database.saveDatabase()) {
+                        System.out.println("Edited successfully");
+                    } else {
+                        System.out.println("Something went horribly wrong!");
                     }
                     break DetailsLoop;
                 case "2": // Remove
@@ -277,14 +278,15 @@ public final class Main implements Serializable {
                     } else {
                         System.out.println("Something went horribly wrong!");
                     }
-                    UI.sleep(2000);
+                    UI.sleep(1000);
                     break DetailsLoop;
-                default: // Go back
+                case "3": // Go back
+                    break DetailsLoop;
+                default:
                     break;
             }
 //            Database.saveDatabase();
         }
-        sca.close();
     }
 
 }
