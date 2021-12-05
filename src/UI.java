@@ -308,7 +308,7 @@ public final class UI {
                         "\t\t\t\t\t\t\t\t\t|| CHECK-IN:  " + booking.getCheckInDate() + "\n" +
                         "\t\t\t\t\t\t\t\t\t|| CHECK-OUT: " + booking.getCheckOutDate() + "\n" +
                         "\t\t\t\t\t\t\t\t\t|| PRICE: " + booking.getCost() + " DKK\n" +
-                        "\t\t\t\t\t\t\t\t\t|| HAS PAID: "+ booking.getGuest().isHasPaid() + "\n" +
+                        "\t\t\t\t\t\t\t\t\t|| HAS PAID: "+ (booking.getGuest().isHasPaid()? "Paid":"Not Paid") + "\n" +
                         "\t\t\t\t\t\t\t\t\t====================================================================" +
                         "\n\n\n");
             }
@@ -330,17 +330,18 @@ public final class UI {
     public static void displayAvailabilityReport() {
         /* Refresh the console and print the logo */
         clearScreen();
-        System.out.println("\n" +
-                "\n" +
-                "______ _____  ________  ___   ___  _   _  ___  _____ _       ___  ______ _____ _     _____ _______   __ ______ ___________ ___________ _____ \n" +
-                "| ___ \\  _  ||  _  |  \\/  |  / _ \\| | | |/ _ \\|_   _| |     / _ \\ | ___ \\_   _| |   |_   _|_   _\\ \\ / / | ___ \\  ___| ___ \\  _  | ___ \\_   _|\n" +
-                "| |_/ / | | || | | | .  . | / /_\\ \\ | | / /_\\ \\ | | | |    / /_\\ \\| |_/ / | | | |     | |   | |  \\ V /  | |_/ / |__ | |_/ / | | | |_/ / | |  \n" +
-                "|    /| | | || | | | |\\/| | |  _  | | | |  _  | | | | |    |  _  || ___ \\ | | | |     | |   | |   \\ /   |    /|  __||  __/| | | |    /  | |  \n" +
-                "| |\\ \\\\ \\_/ /\\ \\_/ / |  | | | | | \\ \\_/ / | | |_| |_| |____| | | || |_/ /_| |_| |_____| |_  | |   | |   | |\\ \\| |___| |   \\ \\_/ / |\\ \\  | |  \n" +
-                "\\_| \\_|\\___/  \\___/\\_|  |_/ \\_| |_/\\___/\\_| |_/\\___/\\_____/\\_| |_/\\____/ \\___/\\_____/\\___/  \\_/   \\_/   \\_| \\_\\____/\\_|    \\___/\\_| \\_| \\_/  \n" +
-                "                                                                                                                                             \n" +
-                "                                                                                                                                             \n" +
-                "\n\n\n");
+        System.out.println("                                                                                                                                                    \n" +
+                "\t\t88888888ba     ,ad8888ba,      ,ad8888ba,    88b           d88     88888888ba   88888888888  88888888ba     ,ad8888ba,    88888888ba  888888888888  \n" +
+                "\t\t88      \"8b   d8\"'    `\"8b    d8\"'    `\"8b   888b         d888     88      \"8b  88           88      \"8b   d8\"'    `\"8b   88      \"8b      88       \n" +
+                "\t\t88      ,8P  d8'        `8b  d8'        `8b  88`8b       d8'88     88      ,8P  88           88      ,8P  d8'        `8b  88      ,8P      88       \n" +
+                "\t\t88aaaaaa8P'  88          88  88          88  88 `8b     d8' 88     88aaaaaa8P'  88aaaaa      88aaaaaa8P'  88          88  88aaaaaa8P'      88       \n" +
+                "\t\t88\"\"\"\"88'    88          88  88          88  88  `8b   d8'  88     88\"\"\"\"88'    88\"\"\"\"\"      88\"\"\"\"\"\"'    88          88  88\"\"\"\"88'        88       \n" +
+                "\t\t88    `8b    Y8,        ,8P  Y8,        ,8P  88   `8b d8'   88     88    `8b    88           88           Y8,        ,8P  88    `8b        88       \n" +
+                "\t\t88     `8b    Y8a.    .a8P    Y8a.    .a8P   88    `888'    88     88     `8b   88           88            Y8a.    .a8P   88     `8b       88       \n" +
+                "\t\t88      `8b    `\"Y8888Y\"'      `\"Y8888Y\"'    88     `8'     88     88      `8b  88888888888  88             `\"Y8888Y\"'    88      `8b      88       \n" +
+                "                                                                                                                                                    \n" +
+                "                                                                                                                                                    \n" +
+                "\n");
 
         /* Assign the serialized ArrayList "Room" objects to auxiliary "rooms" ArrayList */
         ArrayList<Room> rooms = Database.getList(Room.class);
@@ -348,14 +349,14 @@ public final class UI {
         /* Iterate through all Room objects inside "rooms" and get the relevant attributes */
         for (Room room : rooms) {
             System.out.println(
-                            "\t\t\t\t\t\t\t\t\t====================================================================\n" +
-                            "\t\t\t\t\t\t\t\t\t|| ROOM NUMBER: " + room.getNumber() + "\n" +
-                            "\t\t\t\t\t\t\t\t\t|| TYPE: " + room.getType() + "\n" +
-                            "\t\t\t\t\t\t\t\t\t|| IS OCCUPIED:  " + room.isOccupied() + "\n" +
-                            "\t\t\t\t\t\t\t\t\t|| IS CLEAN: " + room.isClean() + "\n" +
-                            "\t\t\t\t\t\t\t\t\t|| IS OUT OF ORDER: " + room.isOutOfOrder() + "\n" +
-                            "\t\t\t\t\t\t\t\t\t|| STANDARD PRICE: "+ room.getStandardPrice() + " DKK\n" +
-                            "\t\t\t\t\t\t\t\t\t====================================================================" +
+                            "\t\t\t\t\t\t\t\t\t\t====================================================================\n" +
+                            "\t\t\t\t\t\t\t\t\t\t|| ROOM NUMBER: " + room.getNumber() + "\n" +
+                            "\t\t\t\t\t\t\t\t\t\t|| TYPE: " + room.getType() + "\n" +
+                            "\t\t\t\t\t\t\t\t\t\t|| OCCUPATION STATUS:  " + (room.isOccupied()? "Occupied":"Free") + "\n" +
+                            "\t\t\t\t\t\t\t\t\t\t|| CLEANLINESS STATUS: " + (room.isClean()? "Clean":"Dirty") + "\n" +
+                            "\t\t\t\t\t\t\t\t\t\t|| WORKING CONDITION: " + (room.isOutOfOrder()? "Out of Order":"In Order") + "\n" +
+                            "\t\t\t\t\t\t\t\t\t\t|| STANDARD PRICE: "+ room.getStandardPrice() + " DKK\n" +
+                            "\t\t\t\t\t\t\t\t\t\t====================================================================" +
                             "\n\n\n");
         }
 
