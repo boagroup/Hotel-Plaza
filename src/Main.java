@@ -1,7 +1,7 @@
 import DatabasePackage.Database;
 import ItemsPackage.*;
-
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -210,6 +210,8 @@ public final class Main implements Serializable {
         if (!Database.loadDatabase()) {
             UI.printLogo();
             System.out.println("Something went horribly wrong!");
+            UI.sleep(1000);
+            return;
         }
         ArrayList<T> list = Database.getList(type);
         if (list == null || list.isEmpty()) {
@@ -296,6 +298,8 @@ public final class Main implements Serializable {
         if (!Database.loadDatabase()) {
             UI.printLogo();
             System.out.println("Something went horribly wrong!");
+            UI.sleep(1000);
+            return;
         }
         ArrayList<T> list = Database.getList(type);
         try {
@@ -331,4 +335,87 @@ public final class Main implements Serializable {
 
     }
 
+    public static void addBooking() {
+        if (!Database.loadDatabase()) {
+            UI.printLogo();
+            System.out.println("Something went horribly wrong!");
+            return;
+        }
+        ArrayList<Room> rooms = Database.getList(Room.class);
+        if (rooms == null || rooms.isEmpty()) {
+            UI.printLogo();
+            System.out.println("Add Rooms first!");
+            return;
+        }
+        Guest guest = new Guest("");
+        Room chosenRoom = null;
+        Booking booking = new Booking();
+        LocalDate checkInDate = null;
+        LocalDate checkOutDate = null;
+        boolean dateAlert = false;
+        Integer counter;
+        while (true) {
+            UI.printLogo();
+            System.out.println("1. Guest: " + guest.toString());
+            System.out.println("2. Room: " + (chosenRoom==null?"Not chosen!": chosenRoom.toString()));
+            System.out.println("3. Check-in Date: " + (checkInDate==null?"Not chosen!": checkInDate.toString()));
+            System.out.println("   Check-out Date: " + (checkOutDate==null?"Not chosen!": checkOutDate.toString()));
+            if (dateAlert) {
+                System.out.println("Warning! Your room is unavailable during this time!");
+            }
+            System.out.println("0. Finish Adding Booking");
+            System.out.println("What do you wish to do?");
+            switch (sc.nextLine()) {
+                case "1":
+                    while(guest.edit(sc)) {
+                        UI.printLogo();
+                    }
+                    break;
+                case "2":
+                    rooms = Database.getList(Room.class);
+                    while(true) {
+                        UI.printLogo();
+                        counter = 1;
+                        for (Object elem: rooms ) {
+                            System.out.print(counter++ + ". ");
+                            System.out.println(elem.toString());
+                        }
+                        System.out.println("\n\n0. None\n");
+                        try {
+                            counter = Integer.parseInt(sc.nextLine());
+                            chosenRoom = (counter<1 ? null : rooms.get(counter-1));
+                            break;
+                        } catch (Exception e) {
+                            UI.printLogo();
+                            System.out.println((e instanceof NumberFormatException? "You have to put in a number!":e.getMessage()));
+                            UI.sleep(1000);
+                        }
+                    }
+                    break;
+                case "3":
+
+
+                    break;
+
+                case "0":
+
+                default:
+                    System.out.println("Wrong input!");
+                    UI.sleep(1000);
+            }
+        }
+    }
+
+    public static void checkDates(LocalDate checkIn, LocalDate checkOut, Room room) {
+        Database.loadDatabase();
+        for (Booking elem: Database.getList(Booking.class)) {
+            if (elem.getRoom() != room) {
+                continue;
+            }
+            LocalDate in = elem.getCheckInDate();
+            LocalDate out = elem.getCheckOutDate();
+
+
+        }
+    }
 }
