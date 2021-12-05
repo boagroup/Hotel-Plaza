@@ -72,8 +72,8 @@ public class Authentication implements Serializable {
         }
 
         /* IF Users.ser FILE ALREADY EXISTS */
-        File f = new File("src/DatabasePackage/Users.ser");
-        if (f.exists()) {
+        File f = new File("database/Users.ser");
+        if (f.exists() && !f.isDirectory()) {
 
             /* Check if username is repeated */
             for (User user : loadUsers()) {
@@ -120,8 +120,8 @@ public class Authentication implements Serializable {
     public static void login() {
 
         /* Prevent crash if no users have been registered yet */
-        File f = new File("src/DatabasePackage/Users.ser");
-        if (!f.exists()) {
+        File f = new File("database/Users.ser");
+        if (!f.exists() && !f.isDirectory()) {
             System.out.println("\nNo users registered.");
             return;
         }
@@ -169,7 +169,7 @@ public class Authentication implements Serializable {
      */
     public static void saveUsers() {
         try {
-            FileOutputStream fileOut = new FileOutputStream("src/DatabasePackage/Users.ser");
+            FileOutputStream fileOut = new FileOutputStream("database/Users.ser");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(userArrayList);
             out.close();
@@ -187,7 +187,7 @@ public class Authentication implements Serializable {
     public static ArrayList<User> loadUsers() {
         ArrayList<User> u = null;
         try {
-            FileInputStream fileIn = new FileInputStream("src/DatabasePackage/Users.ser");
+            FileInputStream fileIn = new FileInputStream("database/Users.ser");
             ObjectInputStream in = new ObjectInputStream(fileIn);
             u = (ArrayList<User>) in.readObject();
             in.close();
@@ -214,39 +214,37 @@ public class Authentication implements Serializable {
      * Has built-in failsafe features to prevent the program from crashing.
      */
     public static void listUsers() {
-
+        UI.loadingScreen();
+        UI.clearScreen();
+        System.out.println("\n" +
+                "UUUUUUUU     UUUUUUUU                                                             LLLLLLLLLLL               iiii                            tttt          \n" +
+                "U::::::U     U::::::U                                                             L:::::::::L              i::::i                        ttt:::t          \n" +
+                "U::::::U     U::::::U                                                             L:::::::::L               iiii                         t:::::t          \n" +
+                "UU:::::U     U:::::UU                                                             LL:::::::LL                                            t:::::t          \n" +
+                " U:::::U     U:::::U    ssssssssss       eeeeeeeeeeee    rrrrr   rrrrrrrrr          L:::::L               iiiiiii     ssssssssss   ttttttt:::::ttttttt    \n" +
+                " U:::::D     D:::::U  ss::::::::::s    ee::::::::::::ee  r::::rrr:::::::::r         L:::::L               i:::::i   ss::::::::::s  t:::::::::::::::::t    \n" +
+                " U:::::D     D:::::Uss:::::::::::::s  e::::::eeeee:::::eer:::::::::::::::::r        L:::::L                i::::i ss:::::::::::::s t:::::::::::::::::t    \n" +
+                " U:::::D     D:::::Us::::::ssss:::::se::::::e     e:::::err::::::rrrrr::::::r       L:::::L                i::::i s::::::ssss:::::stttttt:::::::tttttt    \n" +
+                " U:::::D     D:::::U s:::::s  ssssss e:::::::eeeee::::::e r:::::r     r:::::r       L:::::L                i::::i  s:::::s  ssssss       t:::::t          \n" +
+                " U:::::D     D:::::U   s::::::s      e:::::::::::::::::e  r:::::r     rrrrrrr       L:::::L                i::::i    s::::::s            t:::::t          \n" +
+                " U:::::D     D:::::U      s::::::s   e::::::eeeeeeeeeee   r:::::r                   L:::::L                i::::i       s::::::s         t:::::t          \n" +
+                " U::::::U   U::::::Ussssss   s:::::s e:::::::e            r:::::r                   L:::::L         LLLLLL i::::i ssssss   s:::::s       t:::::t    tttttt\n" +
+                " U:::::::UUU:::::::Us:::::ssss::::::se::::::::e           r:::::r                 LL:::::::LLLLLLLLL:::::Li::::::is:::::ssss::::::s      t::::::tttt:::::t\n" +
+                "  UU:::::::::::::UU s::::::::::::::s  e::::::::eeeeeeee   r:::::r                 L::::::::::::::::::::::Li::::::is::::::::::::::s       tt::::::::::::::t\n" +
+                "    UU:::::::::UU    s:::::::::::ss    ee:::::::::::::e   r:::::r                 L::::::::::::::::::::::Li::::::i s:::::::::::ss          tt:::::::::::tt\n" +
+                "      UUUUUUUUU       sssssssssss        eeeeeeeeeeeeee   rrrrrrr                 LLLLLLLLLLLLLLLLLLLLLLLLiiiiiiii  sssssssssss              ttttttttttt  \n" +
+                "\n\n");
         /* Prints out the list if the user is an admin */
         if (loggedInUser.getUsername().equals("Admin")) {
             System.out.println("\nListing users with admin permission levels...\n");
-            UI.loadingScreen();
-            UI.clearScreen();
-
-            System.out.println("\n" +
-                    "UUUUUUUU     UUUUUUUU                                                             LLLLLLLLLLL               iiii                            tttt          \n" +
-                    "U::::::U     U::::::U                                                             L:::::::::L              i::::i                        ttt:::t          \n" +
-                    "U::::::U     U::::::U                                                             L:::::::::L               iiii                         t:::::t          \n" +
-                    "UU:::::U     U:::::UU                                                             LL:::::::LL                                            t:::::t          \n" +
-                    " U:::::U     U:::::U    ssssssssss       eeeeeeeeeeee    rrrrr   rrrrrrrrr          L:::::L               iiiiiii     ssssssssss   ttttttt:::::ttttttt    \n" +
-                    " U:::::D     D:::::U  ss::::::::::s    ee::::::::::::ee  r::::rrr:::::::::r         L:::::L               i:::::i   ss::::::::::s  t:::::::::::::::::t    \n" +
-                    " U:::::D     D:::::Uss:::::::::::::s  e::::::eeeee:::::eer:::::::::::::::::r        L:::::L                i::::i ss:::::::::::::s t:::::::::::::::::t    \n" +
-                    " U:::::D     D:::::Us::::::ssss:::::se::::::e     e:::::err::::::rrrrr::::::r       L:::::L                i::::i s::::::ssss:::::stttttt:::::::tttttt    \n" +
-                    " U:::::D     D:::::U s:::::s  ssssss e:::::::eeeee::::::e r:::::r     r:::::r       L:::::L                i::::i  s:::::s  ssssss       t:::::t          \n" +
-                    " U:::::D     D:::::U   s::::::s      e:::::::::::::::::e  r:::::r     rrrrrrr       L:::::L                i::::i    s::::::s            t:::::t          \n" +
-                    " U:::::D     D:::::U      s::::::s   e::::::eeeeeeeeeee   r:::::r                   L:::::L                i::::i       s::::::s         t:::::t          \n" +
-                    " U::::::U   U::::::Ussssss   s:::::s e:::::::e            r:::::r                   L:::::L         LLLLLL i::::i ssssss   s:::::s       t:::::t    tttttt\n" +
-                    " U:::::::UUU:::::::Us:::::ssss::::::se::::::::e           r:::::r                 LL:::::::LLLLLLLLL:::::Li::::::is:::::ssss::::::s      t::::::tttt:::::t\n" +
-                    "  UU:::::::::::::UU s::::::::::::::s  e::::::::eeeeeeee   r:::::r                 L::::::::::::::::::::::Li::::::is::::::::::::::s       tt::::::::::::::t\n" +
-                    "    UU:::::::::UU    s:::::::::::ss    ee:::::::::::::e   r:::::r                 L::::::::::::::::::::::Li::::::i s:::::::::::ss          tt:::::::::::tt\n" +
-                    "      UUUUUUUUU       sssssssssss        eeeeeeeeeeeeee   rrrrrrr                 LLLLLLLLLLLLLLLLLLLLLLLLiiiiiiii  sssssssssss              ttttttttttt  \n" +
-                    "\n\n");
 
             /* Handles the list if the "Users.ser" file exists */
-            File f = new File("src/DatabasePackage/Users.ser");
+            File f = new File("database/Users.ser");
             if (f.exists() && (!loadUsers().isEmpty())) {
                 for (User user : loadUsers()) {
                     System.out.println();
                     System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\t<=================================>");
-                    System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\tSERNAME: " + user.getUsername());
+                    System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\tUSERNAME: " + user.getUsername());
                     System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\tPASSWORD: " + user.getPassword());
                     System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\tPERMISSION LEVEL: " + user.getPermission());
                     System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\t<=================================>");
@@ -268,16 +266,14 @@ public class Authentication implements Serializable {
 
         /* Prints out the censored list for regular users */
         else {
-            UI.loadingScreen();
-            UI.clearScreen();
             for (User user : loadUsers()) {
                 System.out.println();
-                System.out.println("<=================================>");
-                System.out.println("USERNAME: " + user.getUsername());
+                System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\t<=================================>");
+                System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\tUSERNAME: " + user.getUsername());
                 user.setPassword("*****");
-                System.out.println("PASSWORD: " + user.getPassword());
-                System.out.println("PERMISSION LEVEL: " + user.getPermission());
-                System.out.println("<=================================>");
+                System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\tPASSWORD: " + user.getPassword());
+                System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\tPERMISSION LEVEL: " + user.getPermission());
+                System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\t<=================================>");
                 System.out.println();
             }
         }
@@ -301,11 +297,11 @@ public class Authentication implements Serializable {
         if (loggedInUser.getPermission() >= 3) {
 
             /* Check if "Users.ser" file exists */
-            File f = new File("src/DatabasePackage/Users.ser");
+            File f = new File("database/Users.ser");
 
             /* If it does, iterate through each user and print out
             their names alongside their incremented indexes */
-            if (f.exists()) {
+            if (f.exists() && !f.isDirectory()) {
                 System.out.println("Saved Users:");
                 int i = 1;
                 for (User user : loadUsers()) {
