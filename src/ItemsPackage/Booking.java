@@ -1,16 +1,19 @@
 package ItemsPackage;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class Booking extends Item implements Serializable {
     protected Room room;
     protected Guest guest;
-    protected Date checkInDate;
-    protected Date checkOutDate;
+    protected LocalDate checkInDate;
+    protected LocalDate checkOutDate;
     protected int stayPeriod; // number of days
     protected double cost; // total amount in DKK
+
+    public Booking(){}
 
     public Booking(Room room, Guest guest) {
         this.room = room;
@@ -18,20 +21,12 @@ public class Booking extends Item implements Serializable {
         generateTags();
     }
 
-    public Booking(Room room, Guest guest, Date checkInDate) {
-        this.room = room;
-        this.guest = guest;
-        this.checkInDate = checkInDate;
-        generateTags();
-    }
-
-    public Booking(Room room, Guest guest, Date checkInDate, Date checkOutDate, int stayPeriod, double cost) {
+    public Booking(Room room, Guest guest, LocalDate checkInDate, LocalDate checkOutDate) {
         this.room = room;
         this.guest = guest;
         this.checkInDate = checkInDate;
         this.checkOutDate = checkOutDate;
-        this.stayPeriod = stayPeriod;
-        this.cost = cost;
+
         generateTags();
     }
 
@@ -54,14 +49,38 @@ public class Booking extends Item implements Serializable {
         return "Booking{" +
                 "room=" + room +
                 ", guest=" + guest +
-                ", checkInDate=" + checkInDate +
-                ", checkOutDate=" + checkOutDate +
+                ", checkInDate=" + checkInDate.toString() +
+                ", checkOutDate=" + checkOutDate.toString() +
                 ", stayPeriod=" + stayPeriod +
                 ", cost=" + cost +
                 '}';
     }
 
     public boolean edit(Scanner sc) {
+        System.out.println("1. Check-in LocalDate: " + (checkInDate==null?"Not chosen!": checkInDate.toString()));
+        System.out.println("2. Check-out LocalDate: " + (checkOutDate==null?"Not chosen!": checkOutDate.toString()));
+        switch (sc.nextLine()) {
+            case "1":
+                System.out.println("Please enter the Check-in LocalDate: ");
+                checkInDate = LocalDate.parse(sc.nextLine(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                if (checkOutDate != null) {
+                    if (checkInDate.isAfter(checkOutDate)) {
+                        checkInDate = null;
+                    }
+                }
+                break;
+            case "2":
+                System.out.println("Please enter the Check-out LocalDate: ");
+                checkOutDate = LocalDate.parse(sc.nextLine(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                if (checkInDate != null) {
+                    if (checkOutDate.isBefore(checkInDate)) {
+                        checkOutDate = null;
+                    }
+                }
+                break;
+            default:
+                return false;
+        }
         return true;
     }
     // Getters
@@ -74,11 +93,11 @@ public class Booking extends Item implements Serializable {
         return guest;
     }
 
-    public Date getCheckInDate() {
+    public LocalDate getCheckInDate() {
         return checkInDate;
     }
 
-    public Date getCheckOutDate() {
+    public LocalDate getCheckOutDate() {
         return checkOutDate;
     }
 
@@ -100,11 +119,11 @@ public class Booking extends Item implements Serializable {
         this.guest = guest;
     }
 
-    public void setCheckInDate(Date checkInDate) {
+    public void setCheckInDate(LocalDate checkInDate) {
         this.checkInDate = checkInDate;
     }
 
-    public void setCheckOutDate(Date checkOutDate) {
+    public void setCheckOutDate(LocalDate checkOutDate) {
         this.checkOutDate = checkOutDate;
     }
 
