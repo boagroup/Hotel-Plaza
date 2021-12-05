@@ -1,6 +1,9 @@
 package ItemsPackage;
 
-public class Staff extends Item {
+import java.io.Serializable;
+import java.util.Scanner;
+
+public class Staff extends Item implements Serializable {
     protected String name;
     protected String position;
     protected double salary; // Hourly base salary in DKK
@@ -52,6 +55,9 @@ public class Staff extends Item {
                 '}';
     }
 
+    public boolean edit() {
+        return true;
+    }
     // Getters
 
     public String getName() {

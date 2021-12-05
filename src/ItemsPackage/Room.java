@@ -1,9 +1,10 @@
 package ItemsPackage;
 
+import java.io.Serializable;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class Room extends Item {
+public class Room extends Item implements Serializable {
 	protected int number;
 	protected String type;
 	protected boolean isOccupied = false;
@@ -64,7 +65,8 @@ public class Room extends Item {
 				'}';
 	}
 
-	public boolean edit(Scanner sc) {
+	public boolean edit() {
+		Scanner sc = new Scanner(System.in);
 		System.out.println("Room Number: " + number);
 		System.out.println("1. Room Type: " + type);
 		System.out.println("2. Occupied: " + isOccupied);
@@ -72,6 +74,7 @@ public class Room extends Item {
 		System.out.println("4. Number of beds: " + number);
 		System.out.println("5. Clean: " + isClean);
 		System.out.println("6. Out of order: " + isOutOfOrder);
+		System.out.println("0. Go back");
 		String answer = sc.nextLine();
 		switch (answer) {
 			case "1":
@@ -119,8 +122,10 @@ public class Room extends Item {
 				}
 				break;
 			default:
+				sc.close();
 				return false;
 		}
+		sc.close();
 		return true;
 	}
 

@@ -1,8 +1,10 @@
 package ItemsPackage;
 
+import java.io.Serializable;
 import java.util.Date;
+import java.util.Scanner;
 
-public class Booking extends Item {
+public class Booking extends Item implements Serializable {
     protected Room room;
     protected Guest guest;
     protected Date checkInDate;
@@ -59,6 +61,9 @@ public class Booking extends Item {
                 '}';
     }
 
+    public boolean edit() {
+        return true;
+    }
     // Getters
 
     public Room getRoom() {

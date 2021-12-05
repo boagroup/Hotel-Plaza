@@ -1,6 +1,9 @@
 package ItemsPackage;
 
-public class Guest extends Item {
+import java.io.Serializable;
+import java.util.Scanner;
+
+public class Guest extends Item implements Serializable {
 
 	protected String name;
 	protected boolean hasPaid = false;
@@ -53,6 +56,9 @@ public class Guest extends Item {
 				'}';
 	}
 
+	public boolean edit() {
+		return true;
+	}
 
 //* Getters
 

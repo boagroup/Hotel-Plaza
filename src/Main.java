@@ -68,6 +68,7 @@ public final class Main implements Serializable {
                     break;
 
                 case "3": // Terminate program
+                    sc.close();
                     System.exit(0);
                     break;
 
@@ -225,8 +226,13 @@ public final class Main implements Serializable {
                     System.out.print(counter++ + ". ");
                     System.out.println(elem.toString());
                 }
+                System.out.println("\n\n0. Go Back\n");
                 try {
-                    seeDetails(list.get(sc.nextInt()-1), list, sc);
+                    counter = sc.nextInt();
+                    if (counter < 1) {
+                        return;
+                    }
+                    seeDetails(list.get(counter-1), list, sc);
                     return;
                 } catch (Exception e) {
                     if (e instanceof InputMismatchException) {
@@ -245,6 +251,7 @@ public final class Main implements Serializable {
 
     public static <T extends Item> void seeDetails(T obj, ArrayList<T> list, Scanner sc) {
         String answer;
+        Scanner sca = new Scanner(System.in); // bug workaround
         DetailsLoop:
         while (true) {
             UI.printLogo();
@@ -253,10 +260,14 @@ public final class Main implements Serializable {
                     "2. Remove\n" +
                     "3. Go back to Menu\n" +
                     "\nWhat do you wish to do?\n");
-            answer = sc.nextLine();
+
+            answer = sca.nextLine();
             switch (answer) {
                 case "1": // Edit
-//                    obj.edit();
+                    UI.printLogo();
+                    while(obj.edit()) {
+                        UI.printLogo();
+                    }
                     break DetailsLoop;
                 case "2": // Remove
                     list.remove(obj);
@@ -266,12 +277,14 @@ public final class Main implements Serializable {
                     } else {
                         System.out.println("Something went horribly wrong!");
                     }
+                    UI.sleep(2000);
                     break DetailsLoop;
                 default: // Go back
-                    return;
+                    break;
             }
 //            Database.saveDatabase();
         }
+        sca.close();
     }
 
 }
