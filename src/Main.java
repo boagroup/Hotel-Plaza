@@ -176,7 +176,7 @@ public final class Main implements Serializable {
             answer = sc.nextLine();
             switch (answer) {
                 case "1": // Add Staff
-                    System.out.println("Nothing here yet");
+                    addItem(Staff.class, new Staff(""));
                     break;
 
                 case "2": // Manage Staff
