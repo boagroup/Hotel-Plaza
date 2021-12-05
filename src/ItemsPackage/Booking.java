@@ -12,6 +12,7 @@ public class Booking extends Item implements Serializable {
     protected LocalDate checkOutDate;
     protected int stayPeriod; // number of days
     protected double cost; // total amount in DKK
+    protected static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     public Booking(){}
 
@@ -49,34 +50,43 @@ public class Booking extends Item implements Serializable {
         return "Booking{" +
                 "room=" + room +
                 ", guest=" + guest +
-                ", checkInDate=" + checkInDate.toString() +
-                ", checkOutDate=" + checkOutDate.toString() +
+                ", checkInDate=" + (checkInDate == null? "null" : checkInDate.format(formatter)) +
+                ", checkOutDate=" + (checkOutDate == null? "null" : checkOutDate.format(formatter)) +
                 ", stayPeriod=" + stayPeriod +
                 ", cost=" + cost +
                 '}';
     }
 
     public boolean edit(Scanner sc) {
-        System.out.println("1. Check-in LocalDate: " + (checkInDate==null?"Not chosen!": checkInDate.toString()));
-        System.out.println("2. Check-out LocalDate: " + (checkOutDate==null?"Not chosen!": checkOutDate.toString()));
+        System.out.println("1. Check-in LocalDate: " + (checkInDate==null?"Not chosen!": checkInDate.format(formatter)));
+        System.out.println("2. Check-out LocalDate: " + (checkOutDate==null?"Not chosen!": checkOutDate.format(formatter)));
+        System.out.println("3 Go back");
         switch (sc.nextLine()) {
             case "1":
-                System.out.println("Please enter the Check-in LocalDate: ");
-                checkInDate = LocalDate.parse(sc.nextLine(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-                if (checkOutDate != null) {
-                    if (checkInDate.isAfter(checkOutDate)) {
-                        checkInDate = null;
+                    try {
+                        System.out.println("Please enter the Check-in LocalDate: ");
+                        checkInDate = LocalDate.parse(sc.nextLine(),formatter);
+                        if (checkOutDate != null) {
+                            if (checkInDate.isAfter(checkOutDate)) {
+                                checkInDate = null;
+                            }
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Incorrect Date Format!");
                     }
-                }
                 break;
             case "2":
-                System.out.println("Please enter the Check-out LocalDate: ");
-                checkOutDate = LocalDate.parse(sc.nextLine(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-                if (checkInDate != null) {
-                    if (checkOutDate.isBefore(checkInDate)) {
-                        checkOutDate = null;
+                    try {
+                        System.out.println("Please enter the Check-out LocalDate: ");
+                        checkOutDate = LocalDate.parse(sc.nextLine(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                        if (checkInDate != null) {
+                            if (checkOutDate.isBefore(checkInDate)) {
+                                checkOutDate = null;
+                            }
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Incorrect Date Format!");
                     }
-                }
                 break;
             default:
                 return false;
