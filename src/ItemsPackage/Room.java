@@ -1,7 +1,5 @@
 package ItemsPackage;
-
 import java.io.Serializable;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Room extends Item implements Serializable {
