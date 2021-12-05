@@ -347,27 +347,24 @@ public final class Main implements Serializable {
             System.out.println("Add Rooms first!");
             return;
         }
-        Guest guest = new Guest("");
-        Room chosenRoom = null;
         Booking booking = new Booking();
-        LocalDate checkInDate = null;
-        LocalDate checkOutDate = null;
-        boolean dateAlert = false;
+//        boolean dateAlert = false;
         Integer counter;
+        bookingLoop:
         while (true) {
             UI.printLogo();
-            System.out.println("1. Guest: " + guest.toString());
-            System.out.println("2. Room: " + (chosenRoom==null?"Not chosen!": chosenRoom.toString()));
-            System.out.println("3. Check-in Date: " + (checkInDate==null?"Not chosen!": checkInDate.toString()));
-            System.out.println("   Check-out Date: " + (checkOutDate==null?"Not chosen!": checkOutDate.toString()));
-            if (dateAlert) {
-                System.out.println("Warning! Your room is unavailable during this time!");
-            }
+            System.out.println("1. Guest: " + booking.getGuest().toString());
+            System.out.println("2. Room: " + (booking.getRoom()==null?"Not chosen!": booking.getRoom().toString()));
+            System.out.println("3. Check-in Date: " + (booking.getCheckInDate()==null?"Not chosen!": booking.getCheckInDate().toString()));
+            System.out.println("   Check-out Date: " + ( booking.getCheckOutDate()==null?"Not chosen!":  booking.getCheckOutDate().toString()));
+//            if (dateAlert) {
+//                System.out.println("Warning! Your room is unavailable during this time!");
+//            }
             System.out.println("0. Finish Adding Booking");
             System.out.println("What do you wish to do?");
             switch (sc.nextLine()) {
                 case "1":
-                    while(guest.edit(sc)) {
+                    while(booking.getGuest().edit(sc)) {
                         UI.printLogo();
                     }
                     break;
@@ -383,7 +380,7 @@ public final class Main implements Serializable {
                         System.out.println("\n\n0. None\n");
                         try {
                             counter = Integer.parseInt(sc.nextLine());
-                            chosenRoom = (counter<1 ? null : rooms.get(counter-1));
+                            booking.setRoom((counter < 1 ? null : rooms.get(counter-1)));
                             break;
                         } catch (Exception e) {
                             UI.printLogo();
@@ -391,22 +388,39 @@ public final class Main implements Serializable {
                             UI.sleep(1000);
                         }
                     }
+                    if (!checkDates(booking.getCheckInDate(), booking.getCheckOutDate(), booking.getRoom())) {
+                        UI.printLogo();
+                        System.out.println("During this period room is occupied!");
+                        booking.setRoom(null);
+                        UI.sleep(1000);
+                    }
                     break;
                 case "3":
-
-
+                    while (booking.edit(sc)) {
+                        UI.printLogo();
+                    }
+                    if (!checkDates(booking.getCheckInDate(), booking.getCheckOutDate(), booking.getRoom())) {
+                        UI.printLogo();
+                        System.out.println("During this period room is occupied!");
+                        booking.setCheckInDate(null);
+                        booking.setCheckOutDate(null);
+                        UI.sleep(1000);
+                    }
                     break;
-
                 case "0":
-
+                    break bookingLoop;
                 default:
                     System.out.println("Wrong input!");
                     UI.sleep(1000);
             }
         }
+        if (Database.getList(Booking.class).add(booking)) {
+            UI.printLogo();
+            System.out.println("You successfully added the Booking!");
+        }
     }
 
-    public static void checkDates(LocalDate checkIn, LocalDate checkOut, Room room) {
+    public static boolean checkDates(LocalDate checkIn, LocalDate checkOut, Room room) {
         Database.loadDatabase();
         for (Booking elem: Database.getList(Booking.class)) {
             if (elem.getRoom() != room) {
@@ -414,8 +428,10 @@ public final class Main implements Serializable {
             }
             LocalDate in = elem.getCheckInDate();
             LocalDate out = elem.getCheckOutDate();
-
-
+            if (!(checkIn.isAfter(out) || checkOut.isBefore(in))) {
+                return false;
+            }
         }
+        return true;
     }
 }
