@@ -151,7 +151,7 @@ public final class Main implements Serializable {
 //            answer = sc.nextLine();
             switch (sc.nextLine()) {
                 case "1": // Add Room
-                    addItem(Room.class, new Room(Database.getList(Room.class).size()+1));
+                    addItem(Room.class, new Room(Database.getList(Room.class).size()+101));
                     break;
                 case "2": // Manage Rooms
                     listAll(Room.class);
