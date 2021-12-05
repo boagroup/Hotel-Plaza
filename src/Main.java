@@ -144,12 +144,14 @@ public final class Main implements Serializable {
     }
 
     public static void RoomsMenu() {
-        String answer;
+//        String answer;
         while (true) {
             UI.printRoomsMenu();
-            answer = sc.nextLine();
-            switch (answer) {
+            UI.sleep(100);
+//            answer = sc.nextLine();
+            switch (sc.nextLine()) {
                 case "1": // Add Room
+                    addItem(Room.class, new Room(Database.getList(Room.class).size()+1));
                     break;
                 case "2": // Manage Rooms
                     listAll(Room.class);
@@ -287,6 +289,46 @@ public final class Main implements Serializable {
             }
 //            Database.saveDatabase();
         }
+    }
+
+    public static <T extends Item> void addItem(Class<T> type, T obj) {
+        UI.printLogo();
+        if (!Database.loadDatabase()) {
+            UI.printLogo();
+            System.out.println("Something went horribly wrong!");
+        }
+        ArrayList<T> list = Database.getList(type);
+        try {
+            while(obj.edit(sc)) {
+                UI.printLogo();
+            }
+            UI.printLogo();
+            questionLoop:
+            while (true) {
+                UI.printLogo();
+                System.out.println("Do you wish to add this " + type.getSimpleName() + " to the Database?");
+                System.out.println("1. Yes\n2. No");
+                switch (sc.nextLine()) {
+                    case "1":
+                        list.add(obj);;
+                        break questionLoop;
+                    case "2":
+                        System.out.println("Adding abandoned");
+                        return;
+                    default:
+                        System.out.println("Wrong input!");
+                        break;
+                }
+            }
+            if (Database.saveDatabase()) {
+                System.out.println("Added successfully");
+            } else {
+                System.out.println("Something went horribly wrong!");
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 
 }
