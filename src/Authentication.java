@@ -72,7 +72,7 @@ public class Authentication implements Serializable {
         }
 
         /* IF Users.ser FILE ALREADY EXISTS */
-        File f = new File("Users.ser");
+        File f = new File("src/DatabasePackage/Users.ser");
         if (f.exists()) {
 
             /* Check if username is repeated */
@@ -120,7 +120,7 @@ public class Authentication implements Serializable {
     public static void login() {
 
         /* Prevent crash if no users have been registered yet */
-        File f = new File("Users.ser");
+        File f = new File("src/DatabasePackage/Users.ser");
         if (!f.exists()) {
             System.out.println("\nNo users registered.");
             return;
@@ -169,7 +169,7 @@ public class Authentication implements Serializable {
      */
     public static void saveUsers() {
         try {
-            FileOutputStream fileOut = new FileOutputStream("Users.ser");
+            FileOutputStream fileOut = new FileOutputStream("src/DatabasePackage/Users.ser");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(userArrayList);
             out.close();
@@ -187,7 +187,7 @@ public class Authentication implements Serializable {
     public static ArrayList<User> loadUsers() {
         ArrayList<User> u = null;
         try {
-            FileInputStream fileIn = new FileInputStream("Users.ser");
+            FileInputStream fileIn = new FileInputStream("src/DatabasePackage/Users.ser");
             ObjectInputStream in = new ObjectInputStream(fileIn);
             u = (ArrayList<User>) in.readObject();
             in.close();
@@ -241,7 +241,7 @@ public class Authentication implements Serializable {
                     "\n\n");
 
             /* Handles the list if the "Users.ser" file exists */
-            File f = new File("Users.ser");
+            File f = new File("src/DatabasePackage/Users.ser");
             if (f.exists() && (!loadUsers().isEmpty())) {
                 for (User user : loadUsers()) {
                     System.out.println();
@@ -301,7 +301,7 @@ public class Authentication implements Serializable {
         if (loggedInUser.getPermission() >= 3) {
 
             /* Check if "Users.ser" file exists */
-            File f = new File("Users.ser");
+            File f = new File("src/DatabasePackage/Users.ser");
 
             /* If it does, iterate through each user and print out
             their names alongside their incremented indexes */
