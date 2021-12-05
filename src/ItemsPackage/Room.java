@@ -70,7 +70,7 @@ public class Room extends Item implements Serializable {
 		System.out.println("1. Room Type: " + type);
 		System.out.println("2. Occupied: " + isOccupied);
 		System.out.println("3. Price: " + standardPrice);
-		System.out.println("4. Number of beds: " + number);
+		System.out.println("4. Number of beds: " + numberOfBeds);
 		System.out.println("5. Clean: " + isClean);
 		System.out.println("6. Out of order: " + isOutOfOrder);
 		System.out.println("0. Go back");
@@ -86,17 +86,17 @@ public class Room extends Item implements Serializable {
 			case "3":
 				System.out.println("Please enter the new Price: ");
 				try {
-					standardPrice = sc.nextInt();
+					standardPrice = Double.parseDouble(sc.nextLine());
 				} catch (Exception e) {
-					System.out.println(e instanceof InputMismatchException? "You need to put in an integer!" : e.getMessage());
+					System.out.println(e instanceof NumberFormatException? "You need to put in a number!" : e.getMessage());
 				}
 				break;
 			case "4":
 				System.out.println("Please enter the Number of beds: ");
 				try {
-					numberOfBeds = sc.nextInt();
+					numberOfBeds = Integer.parseInt(sc.nextLine());
 				} catch (Exception e) {
-					System.out.println(e instanceof InputMismatchException? "You need to put in an integer!" : e.getMessage());
+					System.out.println(e instanceof NumberFormatException? "You need to put in an integer!" : e.getMessage());
 				}
 				break;
 			case "5":
@@ -106,8 +106,10 @@ public class Room extends Item implements Serializable {
 				isOutOfOrder ^= true;
 				break;
 			default:
+				generateTags();
 				return false;
 		}
+		generateTags();
 		return true;
 	}
 
