@@ -221,16 +221,35 @@ public class Authentication implements Serializable {
             UI.loadingScreen();
             UI.clearScreen();
 
+            System.out.println("\n" +
+                    "UUUUUUUU     UUUUUUUU                                                             LLLLLLLLLLL               iiii                            tttt          \n" +
+                    "U::::::U     U::::::U                                                             L:::::::::L              i::::i                        ttt:::t          \n" +
+                    "U::::::U     U::::::U                                                             L:::::::::L               iiii                         t:::::t          \n" +
+                    "UU:::::U     U:::::UU                                                             LL:::::::LL                                            t:::::t          \n" +
+                    " U:::::U     U:::::U    ssssssssss       eeeeeeeeeeee    rrrrr   rrrrrrrrr          L:::::L               iiiiiii     ssssssssss   ttttttt:::::ttttttt    \n" +
+                    " U:::::D     D:::::U  ss::::::::::s    ee::::::::::::ee  r::::rrr:::::::::r         L:::::L               i:::::i   ss::::::::::s  t:::::::::::::::::t    \n" +
+                    " U:::::D     D:::::Uss:::::::::::::s  e::::::eeeee:::::eer:::::::::::::::::r        L:::::L                i::::i ss:::::::::::::s t:::::::::::::::::t    \n" +
+                    " U:::::D     D:::::Us::::::ssss:::::se::::::e     e:::::err::::::rrrrr::::::r       L:::::L                i::::i s::::::ssss:::::stttttt:::::::tttttt    \n" +
+                    " U:::::D     D:::::U s:::::s  ssssss e:::::::eeeee::::::e r:::::r     r:::::r       L:::::L                i::::i  s:::::s  ssssss       t:::::t          \n" +
+                    " U:::::D     D:::::U   s::::::s      e:::::::::::::::::e  r:::::r     rrrrrrr       L:::::L                i::::i    s::::::s            t:::::t          \n" +
+                    " U:::::D     D:::::U      s::::::s   e::::::eeeeeeeeeee   r:::::r                   L:::::L                i::::i       s::::::s         t:::::t          \n" +
+                    " U::::::U   U::::::Ussssss   s:::::s e:::::::e            r:::::r                   L:::::L         LLLLLL i::::i ssssss   s:::::s       t:::::t    tttttt\n" +
+                    " U:::::::UUU:::::::Us:::::ssss::::::se::::::::e           r:::::r                 LL:::::::LLLLLLLLL:::::Li::::::is:::::ssss::::::s      t::::::tttt:::::t\n" +
+                    "  UU:::::::::::::UU s::::::::::::::s  e::::::::eeeeeeee   r:::::r                 L::::::::::::::::::::::Li::::::is::::::::::::::s       tt::::::::::::::t\n" +
+                    "    UU:::::::::UU    s:::::::::::ss    ee:::::::::::::e   r:::::r                 L::::::::::::::::::::::Li::::::i s:::::::::::ss          tt:::::::::::tt\n" +
+                    "      UUUUUUUUU       sssssssssss        eeeeeeeeeeeeee   rrrrrrr                 LLLLLLLLLLLLLLLLLLLLLLLLiiiiiiii  sssssssssss              ttttttttttt  \n" +
+                    "\n\n");
+
             /* Handles the list if the "Users.ser" file exists */
             File f = new File("Users.ser");
             if (f.exists() && (!loadUsers().isEmpty())) {
                 for (User user : loadUsers()) {
                     System.out.println();
-                    System.out.println("<=================================>");
-                    System.out.println("USERNAME: " + user.getUsername());
-                    System.out.println("PASSWORD: " + user.getPassword());
-                    System.out.println("PERMISSION LEVEL: " + user.getPermission());
-                    System.out.println("<=================================>");
+                    System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\t<=================================>");
+                    System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\tSERNAME: " + user.getUsername());
+                    System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\tPASSWORD: " + user.getPassword());
+                    System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\tPERMISSION LEVEL: " + user.getPermission());
+                    System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\t<=================================>");
                     System.out.println();
                 }
             }
