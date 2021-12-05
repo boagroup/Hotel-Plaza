@@ -2,6 +2,7 @@ import DatabasePackage.Database;
 import ItemsPackage.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -204,7 +205,32 @@ public final class Main implements Serializable {
     }
 
     public static void FinanceMenu() {
-        String answer;
+        while(true){
+            double dough = 0;
+            UI.printLogo();
+            UI.printFinanceMenu();
+            switch (sc.nextLine()) {
+                case "1":
+                    if(!Database.loadDatabase()) {
+                        UI.printLogo();
+                        System.out.println("Something went horribly wrong!");
+                        UI.sleep(1000);
+                        break;
+                    }
+                    for (Booking elem: Database.getList(Booking.class)) {
+                        dough += elem.getRoom().getStandardPrice() * (1+ChronoUnit.DAYS.between(elem.getCheckInDate(),elem.getCheckOutDate()));
+                    }
+                    UI.printLogo();
+                    System.out.println("INCOME (before taxes): ");
+                    System.out.println("\t" + dough + " dkk");
+                    System.out.println("INCOME (after taxes): ");
+                    System.out.println("\t" + dough*0.75 + " dkk");
+                    sc.nextLine();
+                    break;
+                case "2":
+                    return;
+            }
+        }
     }
 
     public static <T extends Item> void listAll(Class<T> type) {

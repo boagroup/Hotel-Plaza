@@ -157,8 +157,7 @@ public final class UI {
                 credits +
                 returnCurrentUser() + "\n" +
                 "1. See Income Report\n" +
-                "2. File Taxes\n" +
-                "3. Exit" +
+                "2. Exit" +
                 inputQuestion;
         System.out.println(menu);
     }
@@ -307,7 +306,7 @@ public final class UI {
                         "\t\t\t\t\t\t\t\t\t|| GUEST: " + booking.getGuest().getName() + "\n" +
                         "\t\t\t\t\t\t\t\t\t|| CHECK-IN:  " + booking.getCheckInDate() + "\n" +
                         "\t\t\t\t\t\t\t\t\t|| CHECK-OUT: " + booking.getCheckOutDate() + "\n" +
-                        "\t\t\t\t\t\t\t\t\t|| PRICE: " + booking.getCost() + " DKK\n" +
+                        "\t\t\t\t\t\t\t\t\t|| PRICE PER DAY: " + booking.getRoom().getStandardPrice() + " DKK\n" +
                         "\t\t\t\t\t\t\t\t\t|| HAS PAID: "+ (booking.getGuest().isHasPaid()? "Paid":"Not Paid") + "\n" +
                         "\t\t\t\t\t\t\t\t\t====================================================================" +
                         "\n\n\n");
