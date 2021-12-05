@@ -57,6 +57,38 @@ public class Guest extends Item implements Serializable {
 	}
 
 	public boolean edit(Scanner sc) {
+		System.out.println("1. Name: " + name);
+		System.out.println("2. Paid: " + hasPaid);
+		System.out.println("3. Phone Number: " + phoneNumber);
+		System.out.println("4. Address: " + address);
+		System.out.println("5. Payment Details: " + paymentDetails);
+		System.out.println("0. Go back");
+		String answer = sc.nextLine();
+		switch (answer) {
+			case "1":
+				System.out.println("Please enter the new Name: ");
+				name = sc.nextLine();
+				break;
+			case "2":
+				hasPaid ^= true;
+				break;
+			case "3":
+				System.out.println("Please enter the new Phone Number: ");
+				phoneNumber = sc.nextLine();
+				break;
+			case "4":
+				System.out.println("Please enter the new Address: ");
+				address = sc.nextLine();
+				break;
+			case "5":
+				System.out.println("Please enter the new Payment Details: ");
+				paymentDetails = sc.nextLine();
+				break;
+			default:
+				generateTags();
+				return false;
+		}
+		generateTags();
 		return true;
 	}
 
