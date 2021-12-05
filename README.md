@@ -5,7 +5,7 @@
   [**PDF of the Assignment**](HotelPlaza.pdf)
 # 
 ### 1. Understanding Business Diagrams 
-  1.  [**Gantt chart**]("https://studkea-my.sharepoint.com/:x:/g/personal/octa0116_stud_kea_dk/EVwcdbjpNmBHmjo19Rj-BR4BVYMiduOTHO-NkRtZYfFz5A?e=DMKxUX")
+  1.  [**Gantt chart**](Business%20Diagrams/Gantt%20Chart%20Hotel%20Plaza.xlsx)
   2.  [**Stakeholder analysis**](Business%20Diagrams/Stakeholder%20Analysis.png)
   3.  [**Business canvas model**](Business%20Diagrams/Business%20Model%20Canvas%20HP.png)
   4.  [**Swot analysis**](Business%20Diagrams/SWOT%20Analysis%20HP.png)
