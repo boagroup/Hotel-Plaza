@@ -46,13 +46,11 @@ public class Staff extends Item implements Serializable {
 
     @Override
     public String toString() {
-        return "Staff{" +
-                "name='" + name + '\'' +
-                ", position='" + position + '\'' +
-                ", salary=" + salary +
-                ", gender='" + gender + '\'' +
-                ", age=" + age +
-                '}';
+        return  "  ||  " + "NAME: " + name + "  ||  " +
+                "POSITION:  " + position + "  ||  " +
+                "MONTHLY SALARY: " + salary + "  ||  " +
+                "GENDER: " + gender + "  ||  " +
+                "AGE: " + age + "  ||  " ;
     }
 
     public boolean edit(Scanner sc) {
