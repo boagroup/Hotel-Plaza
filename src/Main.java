@@ -153,10 +153,22 @@ public final class Main implements Serializable {
 //            answer = sc.nextLine();
             switch (sc.nextLine()) {
                 case "1": // Add Room
-                    addItem(Room.class, new Room(Database.getList(Room.class).size()+101));
+                    if (Authentication.getLoggedInUser().getPermission() >= 3) {
+                        addItem(Room.class, new Room(Database.getList(Room.class).size() + 101));
+                    }
+                    else {
+                        System.out.println("You do not have the required permission level to add new rooms!");
+                        UI.sleep(1350);
+                    }
                     break;
                 case "2": // Manage Rooms
-                    listAll(Room.class);
+                    if (Authentication.getLoggedInUser().getPermission() >= 3) {
+                        listAll(Room.class);
+                    }
+                    else {
+                        System.out.println("You do not have the required permission level to manage rooms!");
+                        UI.sleep(1350);
+                    }
                     break;
                 case "3": // Display Room Availability
                     UI.displayAvailabilityReport();
@@ -178,11 +190,23 @@ public final class Main implements Serializable {
             answer = sc.nextLine();
             switch (answer) {
                 case "1": // Add Staff
-                    addItem(Staff.class, new Staff(""));
+                    if (Authentication.getLoggedInUser().getPermission() >= 3) {
+                        addItem(Staff.class, new Staff(""));
+                    }
+                    else {
+                        System.out.println("You do not have the required permission level to add new staff members!");
+                        UI.sleep(1400);
+                    }
                     break;
 
                 case "2": // Manage Staff
-                    listAll(Staff.class);
+                    if (Authentication.getLoggedInUser().getPermission() >= 3) {
+                        listAll(Staff.class);
+                    }
+                    else {
+                        System.out.println("You do not have the required permission level to manage staff!");
+                        UI.sleep(1350);
+                    }
                     break;
 
                 case "3": // List Users
@@ -190,7 +214,13 @@ public final class Main implements Serializable {
                     break;
 
                 case "4": // Remove User
-                    Authentication.removeUser();
+                    if (Authentication.getLoggedInUser().getPermission() >= 3) {
+                        Authentication.removeUser();
+                    }
+                    else {
+                        System.out.println("You do not have the required permission level to remove users!");
+                        UI.sleep(1350);
+                    }
                     break;
 
                 case "5": // Go back
@@ -210,24 +240,33 @@ public final class Main implements Serializable {
             UI.printLogo();
             UI.printFinanceMenu();
             switch (sc.nextLine()) {
-                case "1":
-                    if(!Database.loadDatabase()) {
+                case "1": // Display Income Report
+                    if (Authentication.getLoggedInUser().getPermission() >= 3) {
+                        if (!Database.loadDatabase()) {
+                            UI.printLogo();
+                            System.out.println("Something went horribly wrong!");
+                            UI.sleep(1000);
+                            break;
+                        }
+                        for (Booking elem : Database.getList(Booking.class)) {
+                            dough += elem.getRoom().getStandardPrice() * (1 + ChronoUnit.DAYS.between(elem.getCheckInDate(), elem.getCheckOutDate()));
+                        }
                         UI.printLogo();
-                        System.out.println("Something went horribly wrong!");
-                        UI.sleep(1000);
-                        break;
+                        System.out.println("\t\t\t\t\t<=========================================>");
+                        System.out.println("\t\t\t\t\tTOTAL INCOME (before taxes): ");
+                        System.out.println("\t\t\t\t\t\t" + dough + " DKK\n\n");
+                        System.out.println("\t\t\t\t\tTOTAL INCOME (after taxes): ");
+                        System.out.println("\t\t\t\t\t\t" + dough * 0.75 + " DKK");
+                        System.out.println("\t\t\t\t\t<=========================================>");
+                        System.out.println("\t\t\t\t\t\n\nInsert anything to go back");
+                        sc.nextLine();
                     }
-                    for (Booking elem: Database.getList(Booking.class)) {
-                        dough += elem.getRoom().getStandardPrice() * (1+ChronoUnit.DAYS.between(elem.getCheckInDate(),elem.getCheckOutDate()));
+                    else {
+                        System.out.println("You do not have the required permission level to access the financial report!");
+                        UI.sleep(1600);
                     }
-                    UI.printLogo();
-                    System.out.println("INCOME (before taxes): ");
-                    System.out.println("\t" + dough + " dkk");
-                    System.out.println("INCOME (after taxes): ");
-                    System.out.println("\t" + dough*0.75 + " dkk");
-                    sc.nextLine();
                     break;
-                case "2":
+                case "2": // Go back
                     return;
             }
         }
