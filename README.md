@@ -17,7 +17,7 @@
   5. [**System Sequence Diagram 2**](Software%20Development%20Diagrams/SSD%202.png)
   6. [**Sequence Diagram 1**](Software%20Development%20Diagrams/Sequence%20Diagram%201.png)
   7. [**Sequence Diagram 2**](Software%20Development%20Diagrams/Sequence%20Diagram%202.png)
-  8. [**Class Diagram**](Software%20Development%20Diagrams/Class%20Diagram%20Beta.png)
+  8. [**Class Diagram**](Software%20Development%20Diagrams/Class%20Diagram.png)
 ### 3. Classes
   1. [**Main**](src/Main.java)
   2. [**UI**](src/UI.java)
