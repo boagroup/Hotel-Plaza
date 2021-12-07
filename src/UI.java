@@ -270,7 +270,9 @@ public final class UI {
         System.out.println(
                 "<=============================================================>" +
                 "\n<=============================================================>");
-        sleep(10000);
+        System.out.println("\n\n\nInsert anything to go back");
+        Scanner wait = new Scanner(System.in);
+        wait.nextLine();
     }
 
     /**

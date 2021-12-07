@@ -70,13 +70,12 @@ public final class Main implements Serializable {
                     System.exit(0);
                     break;
 
-                // CHANGE THE VALUE OF CASE "4" TO "Admin" FOR FINAL VERSION
-                case "4": // Overwrite login as Admin
+                case "Admin": // Overwrite login as Admin
 
                     Authentication.setLoggedInUser(new User("Admin", "0", (byte) 127));
                     isLoggedIn = true;
-                    System.out.println("\nAuthentication override for development purposes");
-                    UI.sleep(1250);
+                    System.out.println("\nAuthentication override...");
+                    UI.sleep(750);
                     break;
 
                 default: // Invalid user input
@@ -162,13 +161,7 @@ public final class Main implements Serializable {
                     }
                     break;
                 case "2": // Manage Rooms
-                    if (Authentication.getLoggedInUser().getPermission() >= 3) {
                         listAll(Room.class);
-                    }
-                    else {
-                        System.out.println("You do not have the required permission level to manage rooms!");
-                        UI.sleep(1350);
-                    }
                     break;
                 case "3": // Display Room Availability
                     UI.displayAvailabilityReport();
@@ -249,7 +242,7 @@ public final class Main implements Serializable {
                             break;
                         }
                         for (Booking elem : Database.getList(Booking.class)) {
-                            dough += elem.getRoom().getStandardPrice() * (1 + ChronoUnit.DAYS.between(elem.getCheckInDate(), elem.getCheckOutDate()));
+                            dough += Math.floor(elem.getRoom().getStandardPrice() * (1 + ChronoUnit.DAYS.between(elem.getCheckInDate(), elem.getCheckOutDate())));
                         }
                         UI.printLogo();
                         System.out.println("\t\t\t\t\t<=========================================>");
@@ -495,7 +488,9 @@ public final class Main implements Serializable {
         if (Database.getList(Booking.class).add(booking)) {
             if (Database.saveDatabase()) {
                 UI.printLogo();
-                System.out.println("You successfully added the Booking!");
+                System.out.println("You successfully added the Booking!\nPrinting receipt...");
+                UI.sleep(1250);
+                UI.printReceipt(booking.getGuest().getName(), booking.getRoom().getStandardPrice(), booking.getRoom().getNumber());
             }
         }
     }
